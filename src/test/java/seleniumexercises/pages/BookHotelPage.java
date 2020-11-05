@@ -5,6 +5,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import seleniumexercises.helpers.SeleniumHelpers;
@@ -29,9 +30,40 @@ public class BookHotelPage {
         return this;
     }
 
-    /*public BookHotelPage selectPriceRange(){
+    public BookHotelPage selectPriceRange(int lower, int upper){
 
-    }*/
+    /**
+ * xpath to button lower price is //span[@class='irs-slider from'] (hotels)
+ * of //span[@class='irs-slider from type_last']
+ * xpath to button higher price is //span[@class='irs-slider to']
+ * lower value is weergegeven hier (getText om mee te rekenen): //span[@class="irs-grid-text js-grid-text-0"]
+ * lower % is altijd 0%
+ * upper value is weergegeven hier (getText om mee te rekenen): //span[@class="irs-grid-text js-grid-text-4"]
+ * upper % is altijd 91.4894%
+ *
+ * (double lower * double upperValue) * upperPercentage = specifiedLowerPercentage
+ * (double upper * double upperValue) * upperPercentage = specifiedUpperPercentage
+ */
+
+        String highestPrice = driver.findElement(By.xpath("//span[@class='irs-grid-text js-grid-text-4']")).getText();
+        double upperValue = Double.parseDouble(highestPrice);
+
+        double specifiedLowerPercentage = (lower * upperValue) * 91.4894;
+        int roundedSpecifiedLower = (int) Math.round(specifiedLowerPercentage);
+
+        WebElement slideLower = driver.findElement(By.xpath("//span[@class='irs-slider from]"));
+        Actions moveUp = new Actions(driver);
+        moveUp.dragAndDropBy(slideLower, roundedSpecifiedLower, 0);
+
+        double specifiedUpperPercentage = (upper * upperValue) * 91.4894;
+        int roundedSpecifiedUpper = (int) Math.round(specifiedUpperPercentage);
+
+        WebElement slideUpper = driver.findElement(By.xpath("//span[@class='irs-slider to']"));
+        Actions moveDown = new Actions(driver);
+        moveDown.dragAndDropBy(slideUpper, roundedSpecifiedUpper, 0);
+
+        return this;
+    }
 
     public BookHotelPage selectFilterButton(String filterType){
         selenium.click(By.xpath("//label[@for='" + filterType + "']"));
