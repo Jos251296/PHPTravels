@@ -26,7 +26,7 @@ public class SearchHotelTest {
                 .selectMenuItem("Hotels");
 
         new SearchHotelPage(driver)
-                .setTextfieldDestination("Madinah")
+                .setTextfieldDestination("Alzer")
                 .setDropdownCheckIn()
                 .setDropdownCheckOut()
                 .setAdultNum(2)
