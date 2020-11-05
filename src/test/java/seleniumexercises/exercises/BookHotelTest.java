@@ -40,7 +40,12 @@ public class BookHotelTest {
                 .clickPropertyType("Hotel")
                 .clickPriceFilter("Low to High")
                 .clickSearchButton("Yes")
-                .clickDetailsButton();
+                .clickDetailsButton()
+                .setDropdownCheckIn()
+                .setDropdownCheckOut()
+                .setAdultNum(2)
+                .setChildrenNum(0)
+                .clickModifyButton();
     }
 
     @After
