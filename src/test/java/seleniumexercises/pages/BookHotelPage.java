@@ -13,7 +13,6 @@ public class BookHotelPage {
 
     private WebDriver driver;
     private SeleniumHelpers selenium;
-    private By starRadioButton = By.xpath("//input[@id='1']");
     private By filterButton = By.xpath("//input[@id='Airport Transport']");
 
     public BookHotelPage(WebDriver driver) {
@@ -22,7 +21,7 @@ public class BookHotelPage {
     }
 
     public BookHotelPage selectRadioButton(String starNum){
-        selenium.click(By.xpath("//input[@id='" + starNum + "']"));
+        selenium.click(By.xpath("//label[@for='" + starNum + "']"));
         return this;
     }
 
