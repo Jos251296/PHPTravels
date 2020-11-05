@@ -38,6 +38,16 @@ public class SeleniumHelpers {
         }
     }
 
+    public void dropdown(By by, String country){
+        try{
+            new WebDriverWait(driver, 10).until(ExpectedConditions.elementToBeClickable(by));
+            new Select(driver.findElement(by)).selectByVisibleText(country);
+        }
+        catch (TimeoutException te) {
+            Assert.fail(String.format("Exception in select(): %s", te.getMessage()));
+        }
+    }
+
     public boolean isDisplayed(By by) {
 
         try {
@@ -59,4 +69,6 @@ public class SeleniumHelpers {
             return "Element not found";
         }
     }
+
+
 }
