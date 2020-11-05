@@ -34,7 +34,12 @@ public class BookHotelTest {
 
         new BookHotelPage(driver)
                 .selectRadioButton("2")
-                .selectFilterButton("Night Club");
+                .selectFilterButton("Night Club")
+                .clickViewMoreButton()
+                .selectFilterButton("SPA")
+                .clickPropertyType("Hotel")
+                .clickPriceFilter("Low to High")
+                .clickDetailsButton();
     }
 
     @After
