@@ -85,7 +85,6 @@ public class BookHotelPage {
         moveDown.dragAndDropBy(slideUpper, roundedSpecifiedUpper, 0);
         moveDown.perform();
 
-
         return this;
     }
 
