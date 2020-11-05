@@ -5,6 +5,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Action;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -58,26 +59,32 @@ public class BookHotelPage {
  * upper value is weergegeven hier (getText om mee te rekenen): //span[@class="irs-grid-text js-grid-text-4"]
  * upper % is altijd 91.4894%
  *
- * (double lower * double upperValue) * upperPercentage = specifiedLowerPercentage
- * (double upper * double upperValue) * upperPercentage = specifiedUpperPercentage
+ * (double lower / double upperValue) * upperPercentage = specifiedLowerPercentage
+ * (double upper / double upperValue) * upperPercentage = specifiedUpperPercentage
  */
 
         String highestPrice = driver.findElement(By.xpath("//span[@class='irs-grid-text js-grid-text-4']")).getText();
+        highestPrice = highestPrice.replaceAll("\\s","");
         double upperValue = Double.parseDouble(highestPrice);
 
-        double specifiedLowerPercentage = (lower * upperValue) * 91.4894;
+        double specifiedLowerPercentage = (lower / upperValue) * 91.4894;
         int roundedSpecifiedLower = (int) Math.round(specifiedLowerPercentage);
+        System.out.println(roundedSpecifiedLower);
 
-        WebElement slideLower = driver.findElement(By.xpath("//span[@class='irs-slider from]"));
+        WebElement slideLower = driver.findElement(By.xpath("//span[@class='irs-slider from']"));
         Actions moveUp = new Actions(driver);
         moveUp.dragAndDropBy(slideLower, roundedSpecifiedLower, 0);
+        moveUp.perform();
 
-        double specifiedUpperPercentage = (upper * upperValue) * 91.4894;
+        double specifiedUpperPercentage = (upper / upperValue) * 91.4894;
         int roundedSpecifiedUpper = (int) Math.round(specifiedUpperPercentage);
+        System.out.println(roundedSpecifiedUpper);
 
         WebElement slideUpper = driver.findElement(By.xpath("//span[@class='irs-slider to']"));
         Actions moveDown = new Actions(driver);
         moveDown.dragAndDropBy(slideUpper, roundedSpecifiedUpper, 0);
+        moveDown.perform();
+
 
         return this;
     }
