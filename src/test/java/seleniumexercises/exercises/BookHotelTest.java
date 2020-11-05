@@ -25,7 +25,7 @@ public class BookHotelTest {
                 .load();
 
         new SearchHotelPage(driver)
-                .setTextfieldDestination("Istanbul")
+                .setTextfieldDestination("Alzer")
                 .setDropdownCheckIn()
                 .setDropdownCheckOut()
                 .setAdultNum(2)
