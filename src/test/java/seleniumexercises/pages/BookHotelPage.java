@@ -17,6 +17,7 @@ public class BookHotelPage {
     private SeleniumHelpers selenium;
     private By viewMoreButton = By.xpath("//span[contains(text(),'View More (+)')]");
     private By detailsButton = By.xpath("/html/body/div[1]/div[1]/div[1]/section/div/div[2]/div[2]/div/div[2]/div[1]/div/div[2]/div/div[3]/div/div[2]/a");
+    private By searchButton = By.xpath("//button[@id='searchform']");
 
     public BookHotelPage(WebDriver driver) {
         this.driver = driver;
@@ -52,8 +53,18 @@ public class BookHotelPage {
         return this;
     }
 
+    public BookHotelPage clickSearchButton(String yesOrNoSearch){
+        if (yesOrNoSearch == "yes" || yesOrNoSearch == "Yes" || yesOrNoSearch == "YES"){
+            selenium.click(searchButton);
+        } else {
+            System.out.println("Search button is not pressed");
+        }
+        return this;
+    }
+
     public BookHotelPage clickDetailsButton(){
         selenium.click(detailsButton);
         return this;
     }
+
 }
