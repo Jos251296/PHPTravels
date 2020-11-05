@@ -14,11 +14,28 @@ import java.awt.print.Book;
 
 public class BookHotelPage {
 
+
     private WebDriver driver;
     private SeleniumHelpers selenium;
+
+    //Select Hotel functions ---------------------------------------------------------------------------------
+
     private By viewMoreButton = By.xpath("//span[contains(text(),'View More (+)')]");
     private By detailsButton = By.xpath("/html/body/div[1]/div[1]/div[1]/section/div/div[2]/div[2]/div/div[2]/div[1]/div/div[2]/div/div[3]/div/div[2]/a");
     private By searchButton = By.xpath("//button[@id='searchform']");
+
+    //Detail hotel selectors ---------------------------------------------------------------------------------
+
+    private By dropdownCheckIn = By.id("checkin");
+    private By selectDataCheckin = By.xpath("//*[@id=\"datepickers-container\"]/div[1]/div/div/div/div[contains(text(),'20')]");
+    private By dropdownCheckOut = By.id("checkout");
+    private By selectDataCheckOut = By.xpath("//*[@id=\"datepickers-container\"]/div[2]/div/div/div/div[contains(text(),'24')]");
+    private By buttonAdults = By.xpath("//input[@name= 'adults']/parent::div/span//button[contains(@class, 'bootstrap-touchspin-up')]");
+    private By buttonChildren = By.xpath("//input[@name= 'children']/parent::div/span//button[contains(@class, 'bootstrap-touchspin-up')]");
+    private By buttonLessAdults = By.xpath("//input[@name= 'adults']/parent::div/span//button[contains(@class, 'bootstrap-touchspin-down')]");
+    private By modifyButton = By.xpath("//button[contains(text(),'Modify')]");
+
+    //Select Hotel functions ---------------------------------------------------------------------------------
 
     public BookHotelPage(WebDriver driver) {
         this.driver = driver;
@@ -96,6 +113,45 @@ public class BookHotelPage {
 
     public BookHotelPage clickDetailsButton(){
         selenium.click(detailsButton);
+        return this;
+    }
+
+    //Detail Hotel functions ---------------------------------------------------------------------------------
+
+    public BookHotelPage setDropdownCheckIn (){
+
+        selenium.click(dropdownCheckIn);
+        selenium.click(selectDataCheckin);
+        return this;
+    }
+
+    public BookHotelPage setDropdownCheckOut() {
+        selenium.click(dropdownCheckOut);
+        selenium.click(selectDataCheckOut);
+        return this;
+    }
+
+    public BookHotelPage setAdultNum(int adultNum){
+        if(adultNum >= 2) {
+            for (int i = 0; i < (adultNum - 2); i++)
+                selenium.click(buttonAdults);
+        } else if(adultNum == 1) {
+            selenium.click(buttonLessAdults);
+        } else {
+            System.out.println("please select the number of adults!!!!");
+        }
+
+        return this;
+    }
+
+    public BookHotelPage setChildrenNum(int childrenNum){
+        for(int i=0; i<(childrenNum); i++)
+            selenium.click(buttonChildren);
+        return this;
+    }
+
+    public BookHotelPage clickModifyButton(){
+        selenium.click(modifyButton);
         return this;
     }
 
