@@ -1,4 +1,5 @@
 package seleniumexercises.exercises;
+import seleniumexercises.helpers.GetDateClass;
 import seleniumexercises.pages.*;
 import org.junit.*;
 import org.openqa.selenium.WebDriver;
@@ -27,7 +28,7 @@ public class VisaApplicationTest {
         new SearchForVisaPage(driver)
                 .setCountryOfOriginTo("American Samoa")
                 .setCountryToVisitTo("Saudi Arabia")
-                .setDate("02-11-2020")
+                .setDate()
                 .submit();
 
         new VisaApplicationPage(driver)

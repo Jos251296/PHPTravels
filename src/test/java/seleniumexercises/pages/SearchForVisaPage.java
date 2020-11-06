@@ -1,5 +1,6 @@
 package seleniumexercises.pages;
 
+import seleniumexercises.helpers.GetDateClass;
 import seleniumexercises.helpers.SeleniumHelpers;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -11,7 +12,7 @@ public class SearchForVisaPage {
     private SeleniumHelpers selenium;
 
     private By dropdownFromCountry = By.xpath("//select[@name='nationality_country']/following-sibling::div");
-    private By probeersel   = By.xpath("//select[@name='nationality_country']");
+    private By probeersel = By.xpath("//select[@name='nationality_country']");
     private By textfieldFromCountry = By.xpath("//select[@name='nationality_country']/following-sibling::div//input[@class='chosen-search-input']");
     private By dropdownToCountry = By.xpath("//select[@name='destination_country']/following-sibling::div");
     private By textfieldToCountry = By.xpath("//select[@name='destination_country']/following-sibling::div//input[@class='chosen-search-input']");
@@ -30,9 +31,8 @@ public class SearchForVisaPage {
         selenium.sendKeys(textfieldFromCountry, countryOfOrigin);
         selenium.click(By.xpath(String.format("//li/em[text()='%s']", countryOfOrigin)));
 
-        selenium.dropdown(probeersel, countryOfOrigin);
+        //selenium.dropdown(probeersel, countryOfOrigin);
         return this;
-
     }
 
     public SearchForVisaPage setCountryToVisitTo(String countryToVisit) {
@@ -45,10 +45,12 @@ public class SearchForVisaPage {
         return this;
     }
 
-    public SearchForVisaPage setDate (String date){
+    public SearchForVisaPage setDate (){
 
+        GetDateClass date = new GetDateClass();
+        String currentDate = date.getCurrentDate();
         selenium.click(textfieldDate);
-        selenium.sendKeys(textfieldDate, date);
+        selenium.sendKeys(textfieldDate, currentDate);
         return this;
     }
 
