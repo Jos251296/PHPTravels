@@ -4,7 +4,7 @@ import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import io.restassured.specification.RequestSpecification;
 import org.junit.Assert;
-import org.junit.BeforeClass;
+import org.junit.Before;
 import org.junit.Test;
 
 import static io.restassured.RestAssured.*;
@@ -14,11 +14,51 @@ public class Exercises {
 
     private static RequestSpecification requestSpec;
 
-    @BeforeClass
+    @Before
     public static void setupRequestSpecification() {
         requestSpec = RestAssured.given().
                 baseUri("https://restful-booker.herokuapp.com/").
                 basePath("booking/");
+    }
+
+    /**
+     * Persona zoals gePOST via Postman:
+     * first name = Holly
+     * last name = Day
+     * total price = 175
+     * deposit paid = true
+     * bookingdate checkin = 01-12-2020
+     * bookingdate checkout = 01-01-2021
+     * additional needs = Massage
+     *
+     * Note the bookingid after posting persona.
+     */
+
+    @Before
+    public void setPersona(){
+        Booking persona = new Booking();
+        BookingDates personaDates = new BookingDates();
+
+        personaDates.setCheckIn("01-12-2020");
+        personaDates.setCheckOut("01-01-2021");
+
+        persona.setFirstName("Holly");
+        persona.setLastName("Day");
+        persona.setTotalPrice(420);
+        persona.setBookingDates(personaDates);
+        persona.setAdditionalNeeds("Massage");
+
+        int personaId =
+                given().
+                        spec(requestSpec).
+                        contentType(ContentType.JSON).
+                        body(persona).
+                when().
+                        post("https://restful-booker.herokuapp.com/booking").
+                then().
+                        extract().
+                        path("bookingid");
+
     }
 
     @Test
@@ -30,7 +70,7 @@ public class Exercises {
          */
 
         given().spec(requestSpec).
-                when().get("3").
+                when().get("11").
                 then().assertThat().statusCode(200);
     }
 
@@ -46,9 +86,9 @@ public class Exercises {
         given()
                 .spec(requestSpec).
                 when()
-                .get("5").
+                .get("11").
                 then()
-                .assertThat().body("additionalneeds", equalTo("Breakfast"));
+                .assertThat().body("additionalneeds", equalTo("Massage"));
     }
 
     @Test
@@ -66,10 +106,10 @@ public class Exercises {
 
                 given()
                         .when()
-                        .get("https://restful-booker.herokuapp.com/booking/23")
+                        .get("https://restful-booker.herokuapp.com/booking/11")
                         .as(Booking.class);
 
-        Assert.assertEquals("Bas", booking.getFirstName());
+        Assert.assertEquals("Holly", booking.getFirstName());
     }
 
     @Test
