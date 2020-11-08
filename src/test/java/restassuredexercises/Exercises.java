@@ -14,13 +14,6 @@ public class Exercises {
 
     private static RequestSpecification requestSpec;
 
-    @Before
-    public static void setupRequestSpecification() {
-        requestSpec = RestAssured.given().
-                baseUri("https://restful-booker.herokuapp.com/").
-                basePath("booking/");
-    }
-
     /**
      * Persona zoals gePOST via Postman:
      * first name = Holly
@@ -34,8 +27,7 @@ public class Exercises {
      * Note the bookingid after posting persona.
      */
 
-    @Before
-    public void setPersona(){
+    public int getPersona(){
         Booking persona = new Booking();
         BookingDates personaDates = new BookingDates();
 
@@ -53,12 +45,23 @@ public class Exercises {
                         spec(requestSpec).
                         contentType(ContentType.JSON).
                         body(persona).
-                when().
+                        when().
                         post("https://restful-booker.herokuapp.com/booking").
-                then().
+                        then().
                         extract().
                         path("bookingid");
+        System.out.println(personaId);
+        return personaId;
 
+    }
+
+
+
+    @Before
+    public void setupRequestSpecification() {
+        requestSpec = RestAssured.given().
+                baseUri("https://restful-booker.herokuapp.com/").
+                basePath("booking/");
     }
 
     @Test
@@ -69,8 +72,12 @@ public class Exercises {
          * and check that the status code equals 200
          */
 
-        given().spec(requestSpec).
-                when().get("11").
+//        PersonaHelper personaHelper = new PersonaHelper();
+//        int personaId = personaHelper.getPersona();
+
+        given().
+                when().
+                get("https://restful-booker.herokuapp.com/booking/" + getPersona()).
                 then().assertThat().statusCode(200);
     }
 
@@ -84,9 +91,8 @@ public class Exercises {
          */
 
         given()
-                .spec(requestSpec).
-                when()
-                .get("11").
+                .when()
+                .get("https://restful-booker.herokuapp.com/booking/" + getPersona()).
                 then()
                 .assertThat().body("additionalneeds", equalTo("Massage"));
     }
@@ -106,7 +112,7 @@ public class Exercises {
 
                 given()
                         .when()
-                        .get("https://restful-booker.herokuapp.com/booking/11")
+                        .get("https://restful-booker.herokuapp.com/booking/" + getPersona())
                         .as(Booking.class);
 
         Assert.assertEquals("Holly", booking.getFirstName());
@@ -146,6 +152,8 @@ public class Exercises {
                         .then()
                         .extract()
                         .path("bookingid");
+
+        System.out.println(bookingId);
 
 
         /**
