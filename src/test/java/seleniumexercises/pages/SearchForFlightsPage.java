@@ -80,11 +80,11 @@ public class SearchForFlightsPage {
 
     public SearchForFlightsPage setNumberOfPassengers(int amountOfAdults, int amountOfChildren, int amountOfInfants){
 
-        String placeholderValue = driver.findElement(By.xpath("////input[@name='fadults']")).getAttribute("value");
-        int placeholderInt = Integer.parseInt(placeholderValue);
+        int placeholderValue =
+                Integer.parseInt(driver.findElement(By.xpath("//input[@name='fadults']")).getAttribute("value"));
 
-        if(placeholderInt > 0){
-            for(int i=0; i<placeholderInt; i++){
+        if(placeholderValue > 0){
+            for(int i=0; i<placeholderValue; i++){
                 selenium.click(buttonAdultsDown);
             }
         }
