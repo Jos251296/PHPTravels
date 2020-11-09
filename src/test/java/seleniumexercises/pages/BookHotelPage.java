@@ -69,7 +69,7 @@ public class BookHotelPage {
 
         double specifiedLowerPercentage = (lower / upperValue) * 91.4894;
         int roundedSpecifiedLower = (int) Math.round(specifiedLowerPercentage);
-        System.out.println(roundedSpecifiedLower);
+
 
         WebElement slideLower = driver.findElement(By.xpath("//span[@class='irs-slider from']"));
         Actions moveUp = new Actions(driver);
@@ -78,7 +78,7 @@ public class BookHotelPage {
 
         double specifiedUpperPercentage = (upper / upperValue) * 91.4894;
         int roundedSpecifiedUpper = (int) Math.round(specifiedUpperPercentage);
-        System.out.println(roundedSpecifiedUpper);
+
 
         WebElement slideUpper = driver.findElement(By.xpath("//span[@class='irs-slider to']"));
         Actions moveDown = new Actions(driver);
