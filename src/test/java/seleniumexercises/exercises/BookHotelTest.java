@@ -26,10 +26,12 @@ public class BookHotelTest {
 
         new SearchHotelPage(driver)
                 .setTextfieldDestination("Alzer")
-                .setDropdownCheckIn()
-                .setDropdownCheckOut()
-                .setAdultNum(2)
-                .setChildrenNum(0)
+                .setDropdownDates(
+                        20,
+                        24)
+                .setAmountOfVisitors(
+                        2,
+                        0)
                 .clickSubmitHotel();
 
         new BookHotelPage(driver)
