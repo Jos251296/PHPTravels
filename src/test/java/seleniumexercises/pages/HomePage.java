@@ -25,7 +25,7 @@ public class HomePage {
     }
 
     public HomePage selectMenuItem(String menuItem) {
-        selenium.click(By.linkText(menuItem));
+        selenium.click(By.xpath("//a[contains(text(), '" + menuItem + "')]"));
         return this;
     }
 }
