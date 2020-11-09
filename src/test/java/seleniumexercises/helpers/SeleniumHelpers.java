@@ -7,6 +7,10 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+import java.text.DateFormat;
 
 public class SeleniumHelpers {
 
@@ -57,6 +61,14 @@ public class SeleniumHelpers {
         catch (TimeoutException te) {
             return false;
         }
+    }
+
+    public void currentDate(By by) {
+        DateFormat dateFormat = new SimpleDateFormat("dd/mm/yyyy");
+
+        Date date = new Date();
+        String date1= dateFormat.format(date);
+        System.out.println();
     }
 
     public String getElementText(By by) {
