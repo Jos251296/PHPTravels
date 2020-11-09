@@ -12,12 +12,14 @@ public class SearchForVisaPage {
     private SeleniumHelpers selenium;
 
     private By dropdownFromCountry = By.xpath("//select[@name='nationality_country']/following-sibling::div");
-    private By probeersel = By.xpath("//select[@name='nationality_country']");
     private By textfieldFromCountry = By.xpath("//select[@name='nationality_country']/following-sibling::div//input[@class='chosen-search-input']");
+    private By dropdownNationalityList = By.xpath("//select[@name='nationality_country']/following-sibling::div//li");
     private By dropdownToCountry = By.xpath("//select[@name='destination_country']/following-sibling::div");
     private By textfieldToCountry = By.xpath("//select[@name='destination_country']/following-sibling::div//input[@class='chosen-search-input']");
+    private By dropdownDestinationList = By.xpath("//select[@name='destination_country']/following-sibling::div//li");
     private By textfieldDate = By.name("date");
     private By buttonSubmit = By.xpath("//button[text()='Submit']");
+    private By displayBooking = By.className("collapse-link");
 
 
     public SearchForVisaPage(WebDriver driver) {
@@ -25,6 +27,38 @@ public class SearchForVisaPage {
         selenium = new SeleniumHelpers(driver);
     }
 
+    public SearchForVisaPage setOriginAndDestination(String countryOfOrigin, String countryToVisit){
+
+        selenium.dropdown(dropdownFromCountry, textfieldFromCountry, countryOfOrigin);
+        selenium.click(By.xpath(String.format("//li/em[text()='%s']", countryOfOrigin)));
+
+        selenium.dropdown(dropdownToCountry, textfieldToCountry, countryToVisit);
+        selenium.click(By.xpath(String.format("//li/em[text()='%s']", countryToVisit)));
+        return this;
+    }
+
+    public SearchForVisaPage setDate (){
+
+        GetDateClass date = new GetDateClass();
+        String currentDate = date.getCurrentDate();
+        selenium.click(textfieldDate);
+        selenium.sendKeys(textfieldDate, currentDate);
+        return this;
+    }
+
+    public void submit (){
+
+        selenium.click(buttonSubmit);
+
+    }
+
+    /************************************************
+     * DE CODE HIERONDER IS VERWIJDERD GEDURENDE HET
+     * LEESBAAR MAKEN VAN DE PAGE EN TEST OBJECTEN.
+     * ALS COMMENTAAR BEWAARD VOOR EVT. BEOORDELING
+     ************************************************/
+
+/*
     public SearchForVisaPage setCountryOfOriginTo(String countryOfOrigin) {
 
         selenium.click(dropdownFromCountry);
@@ -44,18 +78,5 @@ public class SearchForVisaPage {
 //        selenium.dropdown(dropdownToCountry, countryToVisit);
         return this;
     }
-
-    public SearchForVisaPage setDate (){
-
-        GetDateClass date = new GetDateClass();
-        String currentDate = date.getCurrentDate();
-        selenium.click(textfieldDate);
-        selenium.sendKeys(textfieldDate, currentDate);
-        return this;
-    }
-
-    public void submit (){
-
-        selenium.click(buttonSubmit);
-    }
+ */
 }

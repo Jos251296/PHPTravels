@@ -26,25 +26,60 @@ public class VisaApplicationTest {
                 .selectMenuItem("Visa");
 
         new SearchForVisaPage(driver)
-                .setCountryOfOriginTo("American Samoa")
-                .setCountryToVisitTo("Saudi Arabia")
+                .setOriginAndDestination(
+                        "American Samoa",
+                        "Saudi Arabia")
                 .setDate()
                 .submit();
 
         new VisaApplicationPage(driver)
-                .setFirstName("Holly")
-                .setLastName("Day")
-                .setEmail("holly_day@badpuns.com")
-                .setConfirmEmail("holly_day@badpuns.com")
-                .setContactNumber("465-555-8378")
-                .additionalRequestsButton()
-                .setAdditionalRequest("A pot of tea")
+                .getSubmitResults()
+                .setPersonalia(
+                        "Holly",
+                        "Day",
+                        "holly_day@badpuns.com",
+                        "420-555-6969",
+                        "A curious sperm whale and an exasperated bowl of petunias")
                 .bookingButton();
+
+        /**
+         * setViewInvoice requires a "Yes" or "yes" statement to continue to the invoice
+         */
+        new VisaConfirmationPage(driver)
+                .getVisaSubmittedResult()
+                .getReservationCode()
+                .setViewInvoice("Yes");
+
+        Assert.assertEquals("Your booking status is waiting",
+                new VisaInvoicePage(driver).getInvoiceResult());
     }
+
+
 
     @After
         public void stopBrowser() {
 
         driver.quit();
     }
+
+    /************************************************
+     * DE CODE HIERONDER IS VERWIJDERD GEDURENDE HET
+     * LEESBAAR MAKEN VAN DE PAGE EN TEST OBJECTEN.
+     * ALS COMMENTAAR BEWAARD VOOR EVT. BEOORDELING
+     ************************************************/
+
+    /*
+
+                 .setCountryOfOriginTo("American Samoa")
+                .setCountryToVisitTo("Saudi Arabia")
+
+                 .setFirstName("Holly")
+                .setLastName("Day")
+                .setEmail("holly_day@badpuns.com")
+                .setContactNumber("420-555-6969")
+                .additionalRequestsButton()
+                .setAdditionalRequest("A curious sperm whale and an exasperated bowl of petunias")
+     */
+
+
 }

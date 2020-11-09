@@ -42,10 +42,17 @@ public class SeleniumHelpers {
         }
     }
 
-    public void dropdown(By by, String country){
+    /**
+     * SELECT werkt inderdaad niet,vandaar deze omslachtige helper.
+     * Gedachte: misschien list van values vangen en invoer daartegen
+     * vergelijken om het gewenste element te selecteren?
+     * Lijkt ook omslachtig...
+     */
+    public void dropdown(By by1, By by2, String country){
         try{
-            new WebDriverWait(driver, 10).until(ExpectedConditions.elementToBeClickable(by));
-            new Select(driver.findElement(by)).selectByVisibleText(country);
+            new WebDriverWait(driver, 10).until(ExpectedConditions.elementToBeClickable(by1));
+            driver.findElement(by1).click();
+            driver.findElement(by2).sendKeys(country);
         }
         catch (TimeoutException te) {
             Assert.fail(String.format("Exception in select(): %s", te.getMessage()));

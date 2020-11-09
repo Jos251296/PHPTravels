@@ -26,15 +26,17 @@ public class SearchForFlightTest {
                 .selectMenuItem("Flights");
 
         new SearchForFlightsPage(driver)
-                .setOneWayOrRoundTrip("round trip")
-                .setFlightClass("Business")
-                .setCountryFrom("Pago Pago")
-                .setCountryTo("Medina")
+                .setOneWayOrRoundTrip("one way")
+                .setFlightClass("Economy")
+                .setOriginAndDestination(
+                        "Pago Pago",
+                        "Madinah")
                 .setDepartDate()
                 .setReturnDate()
-                .setNumberOfAdults(4)
-                .setNumberOfChildren(2)
-                .setNumberOfInfants(1)
+                .setNumberOfPassengers(
+                        4,
+                        2,
+                        1)
                 .setSearchButton();
 
     }
