@@ -30,7 +30,7 @@ public class VisaApplicationPage {
 
         boolean searchSubmitted = selenium.isDisplayed(displayBooking);
         if(searchSubmitted) {
-            System.out.println("Plesae enter your personalia here");
+            System.out.println("The search has been submitted.");
         } else {
             System.out.println("The search was invalid. Please try again.");
         }
