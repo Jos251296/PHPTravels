@@ -29,8 +29,8 @@ public class SearchForFlightsPage {
     //Amount of passengers selectors ---------------------------------------------------------------------------------
     private By buttonAdultsUp = By.xpath("//input[@name='fadults']/parent::div/span/button[text()='+']");
     private By buttonAdultsDown = By.xpath("//input[@name='fadults']/parent::div/span/button[text()='-']");
-    private By buttonChild = By.xpath("//input[@name='fchildren']/parent::div/span/button[text()='+']");
-    private By buttonInfant = By.xpath("//input[@name='finfant']/parent::div/span/button[text()='+']");
+    private By buttonChildUp = By.xpath("//input[@name='fchildren']/parent::div/span/button[text()='+']");
+    private By buttonInfantUp = By.xpath("//input[@name='finfant']/parent::div/span/button[text()='+']");
 
     private By buttonSearch = By.xpath("//div[@class='col-lg-1 col-sm-12 col-xs-12']//button[contains(text(),'Search')]");
 
@@ -74,7 +74,6 @@ public class SearchForFlightsPage {
     public SearchForFlightsPage setReturnDate() {
         selenium.click(textfieldReturnDate);
         selenium.click(dataTableReturn);
-        System.out.println(dataTableReturn);
         return this;
     }
 
@@ -94,15 +93,14 @@ public class SearchForFlightsPage {
         }
 
         for(int i=0; i<(amountOfChildren); i++) {
-            selenium.click(buttonChild);
+            selenium.click(buttonChildUp);
         }
 
         for(int i=0; i<(amountOfInfants); i++) {
-            selenium.click(buttonInfant);
+            selenium.click(buttonInfantUp);
         }
         return this;
     }
-
 
     public SearchForFlightsPage setSearchButton() {
         selenium.click(buttonSearch);
