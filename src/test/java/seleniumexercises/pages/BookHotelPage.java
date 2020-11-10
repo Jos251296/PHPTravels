@@ -22,19 +22,16 @@ public class BookHotelPage {
     //Select Hotel functions ---------------------------------------------------------------------------------
 
     private By viewMoreButton = By.xpath("//span[contains(text(),'View More (+)')]");
-    private By detailsButton = By.xpath("/html/body/div[1]/div[1]/div[1]/section/div/div[2]/div[2]/div/div[2]/div[1]/div/div[2]/div/div[3]/div/div[2]/a");
-    private By searchButton = By.xpath("//button[@id='searchform']");
+    private By detailsFirstButton = By.xpath("//div[@class='product-long-item-wrapper']/div/div/div[2]/div/div[3]//a");
+    private By searchButton = By.id("searchform");
 
     //Detail hotel selectors ---------------------------------------------------------------------------------
 
+    private By modifyButton = By.xpath("//button[@data-target='#change-search'] ");
+    private By textfieldNewDestination = By.className("select2-input");
     private By dropdownCheckIn = By.id("checkin");
-    private By selectDataCheckin = By.xpath("//*[@id=\"datepickers-container\"]/div[1]/div/div/div/div[contains(text(),'20')]");
     private By dropdownCheckOut = By.id("checkout");
-    private By selectDataCheckOut = By.xpath("//*[@id=\"datepickers-container\"]/div[2]/div/div/div/div[contains(text(),'24')]");
-    private By buttonAdults = By.xpath("//input[@name= 'adults']/parent::div/span//button[contains(@class, 'bootstrap-touchspin-up')]");
-    private By buttonChildren = By.xpath("//input[@name= 'children']/parent::div/span//button[contains(@class, 'bootstrap-touchspin-up')]");
-    private By buttonLessAdults = By.xpath("//input[@name= 'adults']/parent::div/span//button[contains(@class, 'bootstrap-touchspin-down')]");
-    private By modifyButton = By.xpath("//button[contains(text(),'Modify')]");
+    private By modifySearchButton = By.xpath("change-search");
 
     //Select Hotel functions ---------------------------------------------------------------------------------
 
@@ -70,7 +67,6 @@ public class BookHotelPage {
         double specifiedLowerPercentage = (lower / upperValue) * 91.4894;
         int roundedSpecifiedLower = (int) Math.round(specifiedLowerPercentage);
 
-
         WebElement slideLower = driver.findElement(By.xpath("//span[@class='irs-slider from']"));
         Actions moveUp = new Actions(driver);
         moveUp.dragAndDropBy(slideLower, roundedSpecifiedLower, 0);
@@ -78,7 +74,6 @@ public class BookHotelPage {
 
         double specifiedUpperPercentage = (upper / upperValue) * 91.4894;
         int roundedSpecifiedUpper = (int) Math.round(specifiedUpperPercentage);
-
 
         WebElement slideUpper = driver.findElement(By.xpath("//span[@class='irs-slider to']"));
         Actions moveDown = new Actions(driver);
@@ -88,27 +83,28 @@ public class BookHotelPage {
         return this;
     }
 
-    public BookHotelPage selectFilterButton(String filterType){
-        selenium.click(By.xpath("//label[@for='" + filterType + "']"));
+    public BookHotelPage selectFilters(String filter1, String filter2){
+        selenium.click(By.xpath("//label[@for='" + filter1 + "']"));
+        selenium.click(By.xpath("//label[@for='" + filter2 + "']"));
         return this;
     }
 
-    public BookHotelPage clickViewMoreButton(){
+    public BookHotelPage viewMoreButton(){
         selenium.click(viewMoreButton);
         return this;
     }
 
-    public BookHotelPage clickPropertyType(String propertyType){
+    public BookHotelPage setPropertyType(String propertyType){
         selenium.click(By.xpath("//label[@for='" + propertyType + "']"));
         return this;
     }
 
-    public BookHotelPage clickPriceFilter(String priceFilter){
+    public BookHotelPage setPriceFilter(String priceFilter){
         selenium.click(By.xpath("//label[contains(text(),'" + priceFilter + "')]"));
         return this;
     }
 
-    public BookHotelPage clickSearchButton(String yesOrNoSearch){
+    public BookHotelPage searchButton(String yesOrNoSearch){
         if (yesOrNoSearch == "yes" || yesOrNoSearch == "Yes" || yesOrNoSearch == "YES"){
             selenium.click(searchButton);
         } else {
@@ -117,48 +113,76 @@ public class BookHotelPage {
         return this;
     }
 
-    public BookHotelPage clickDetailsButton(){
-        selenium.click(detailsButton);
+    public BookHotelPage buttonDetailsFirstHotel(){
+        selenium.click(detailsFirstButton);
         return this;
     }
 
     //Detail Hotel functions ---------------------------------------------------------------------------------
 
-    public BookHotelPage setDropdownCheckIn (){
-
-        selenium.click(dropdownCheckIn);
-        selenium.click(selectDataCheckin);
+    public BookHotelPage setModifyYesOrNo(String modify){
+        if(modify == "Yes" || modify=="yes"){
+        selenium.click(modifyButton);
+        }
         return this;
     }
 
-    public BookHotelPage setDropdownCheckOut() {
-        selenium.click(dropdownCheckOut);
-        selenium.click(selectDataCheckOut);
+    public BookHotelPage setNewDestination(String destination){
+
+        boolean modifyPageVisible = selenium.isDisplayed(By.xpath("//label[text()='Destination']"));
+        if(modifyPageVisible) {
+            selenium.dropdown(textfieldNewDestination, textfieldNewDestination, destination);
+        }
         return this;
     }
 
-    public BookHotelPage setAdultNum(int adultNum){
-        if(adultNum >= 2) {
-            for (int i = 0; i < (adultNum - 2); i++)
-                selenium.click(buttonAdults);
-        } else if(adultNum == 1) {
-            selenium.click(buttonLessAdults);
-        } else {
-            System.out.println("please select the number of adults!!!!");
+    public BookHotelPage setDropdownDates (int dateCheckIn, int dateCheckOut){
+
+        boolean modifyPageVisible = selenium.isDisplayed(By.xpath("//label[text()='Destination']"));
+        if(modifyPageVisible){
+
+            selenium.click(dropdownCheckIn);
+            selenium.click(By.xpath(String.format("//div[@id='datepickers-container']/div[1]//div[contains(text(),'%d']", dateCheckIn)));
+
+            selenium.click(dropdownCheckOut);
+            selenium.click(By.xpath(String.format("//div[@id='datepickers-container']/div[1]//div[contains(text(),'%d']", dateCheckOut)));
         }
 
         return this;
     }
 
-    public BookHotelPage setChildrenNum(int childrenNum){
-        for(int i=0; i<(childrenNum); i++)
-            selenium.click(buttonChildren);
-        return this;
-    }
+    /*
+        private By selectDataCheckin = By.xpath("//*[@id=\"datepickers-container\"]/div[1]/div/div/div/div[contains(text(),'20')]");
+        private By selectDataCheckOut = By.xpath("//*[@id=\"datepickers-container\"]/div[2]/div/div/div/div[contains(text(),'24')]");
 
-    public BookHotelPage clickModifyButton(){
-        selenium.click(modifyButton);
+
+        //And then the option to reselect number of persons hath vanished...(insert mysterious background noises)
+        private By buttonAdults = By.xpath("//input[@name='adults']/parent::div/span/button[text()='+']");
+        private By buttonChildren = By.xpath("//input[@name='children']/parent::div/span/button[text()='+']");
+        private By buttonLessAdults = By.xpath("//input[@name='adults']/parent::div/span/button[text()='-']");
+
+        Reworked should look something this:
+
+        public BookHotelPage setAmountOfPeopleStupidEnoughToUseThisSiteToBook(int adultNum, int childrenNum){
+
+        int placeholderValue =
+                Integer.parseInt(driver.findElement(By.xpath("//input[@name='adults']")).getAttribute("value"));
+
+        if(placeholderValue > 0){
+            for(int i=0; i<placeholderValue; i++){
+                selenium.click(buttonAdultsDown);
+            }
+        }
+
+        for(int i = 0; i<adultNum;i++){
+            selenium.click(buttonAdultsUp);
+        }
+
+        for(int i=0; i<childrenNum;i++){
+            selenium.click(buttonChildrenUp);
+        }
         return this;
     }
+     */
 
 }
