@@ -36,25 +36,22 @@ public class BookHotelTest {
 
         new BookHotelPage(driver)
                 .selectRadioButton("2")
-//                .clickViewMoreButton()
-//                .selectFilterButton("Night Club")
-//                .selectFilterButton("SPA")
-                .selectPriceRange(50,1000);
-//                .clickPropertyType("Hotel")
-//                .clickPriceFilter("Low to High")
-//                .clickSearchButton("Yes")
-//                .clickDetailsButton()
-//                .setDropdownCheckIn()
-//                .setDropdownCheckOut()
-//                .setAdultNum(2)
-//                .setChildrenNum(0)
-//                .clickModifyButton();
+                .viewMoreButton()
+                .selectFilters("Night Club", "SPA")
+                .selectPriceRange(50,1000)
+                .setPropertyType("Hotel")
+                .setPriceFilter("Low to High")
+                .searchButton("Yes")
+                .setModifyYesOrNo("No")
+                .setNewDestination("Alzer")
+                .setDropdownDates(20,24)
+                .buttonDetailsFirstHotel();
 
     }
 
-//    @After
-//    public void stopBrowser() {
-//        driver.quit();
-//    }
+    @After
+    public void stopBrowser() {
+        driver.quit();
+    }
 
 }
