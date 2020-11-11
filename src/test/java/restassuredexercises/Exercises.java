@@ -25,8 +25,9 @@ public class Exercises {
      * additional needs = Massage
      *
      * Note the bookingid after posting persona.
+     *Add: tried to automate creating a persona.
      */
-
+    /*
     public int getPersona(){
         Booking persona = new Booking();
         BookingDates personaDates = new BookingDates();
@@ -54,6 +55,7 @@ public class Exercises {
         return personaId;
 
     }
+     */
 
 
 
@@ -72,12 +74,13 @@ public class Exercises {
          * and check that the status code equals 200
          */
 
-//        PersonaHelper personaHelper = new PersonaHelper();
-//        int personaId = personaHelper.getPersona();
+//        PersonaCreator personaCreator = new PersonaCreator();
+//        int personaId = personaCreator.getPersona();
 
         given().
+                spec(requestSpec).
                 when().
-                get("https://restful-booker.herokuapp.com/booking/" + getPersona()).
+                get("15").
                 then().assertThat().statusCode(200);
     }
 
@@ -91,8 +94,9 @@ public class Exercises {
          */
 
         given()
+                .spec(requestSpec)
                 .when()
-                .get("https://restful-booker.herokuapp.com/booking/" + getPersona()).
+                .get("15").
                 then()
                 .assertThat().body("additionalneeds", equalTo("Massage"));
     }
@@ -111,8 +115,9 @@ public class Exercises {
         Booking booking =
 
                 given()
+                        .spec(requestSpec)
                         .when()
-                        .get("https://restful-booker.herokuapp.com/booking/" + getPersona())
+                        .get("15")
                         .as(Booking.class);
 
         Assert.assertEquals("Holly", booking.getFirstName());
