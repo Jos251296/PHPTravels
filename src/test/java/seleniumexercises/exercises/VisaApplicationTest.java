@@ -48,10 +48,10 @@ public class VisaApplicationTest {
         new VisaConfirmationPage(driver)
                 .getVisaSubmittedResult()
                 .getReservationCode()
-                .setViewInvoice("Yes");
+                .setViewInvoice(true);
 
-        Assert.assertEquals("Your booking status is waiting",
-                new VisaInvoicePage(driver).getInvoiceResult());
+        new VisaInvoicePage(driver)
+                .getInvoiceResult();
     }
 
 
