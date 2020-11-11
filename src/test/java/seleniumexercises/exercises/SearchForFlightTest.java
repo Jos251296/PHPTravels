@@ -39,6 +39,22 @@ public class SearchForFlightTest {
                         1)
                 .setSearchButton();
 
+        new BookFlightPage(driver)
+                .setSearchValidated()
+                .setDirect(true)
+                .setPriceRange(1, 300)
+                .setSelectAirlines("")
+                .setSpecifySearch(false)
+                .setModifySearch(false)
+                .setOneWay(true)
+                .setNewFlightClass("Economy")
+                .setNewOriginAndDestination("Pago Pago", "Madinah")
+                .setNewDepartDate(20)
+                .buttonSearchModified()
+                .buttonBookFirstFlight();
+
+        new BookFlightPassengerPage(driver)
+                .setFlightSelectedConfirmation();
     }
 
 
