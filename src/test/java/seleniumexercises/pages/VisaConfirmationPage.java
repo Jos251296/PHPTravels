@@ -37,9 +37,9 @@ public class VisaConfirmationPage {
         return this;
     }
 
-    public VisaConfirmationPage setViewInvoice(String viewInvoice){
+    public VisaConfirmationPage setViewInvoice(boolean view){
 
-        if(viewInvoice == "Yes" || viewInvoice == "yes"){
+        if(view){
             selenium.click(buttonViewInvoice);
         } else {
             selenium.click(buttonBackToHome);
