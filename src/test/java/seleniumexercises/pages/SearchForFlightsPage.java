@@ -20,7 +20,7 @@ public class SearchForFlightsPage {
     private By textfieldCountryFrom = By.xpath("//div[@id='s2id_location_from']/a");
     private By textfieldCountryTo = By.xpath("//div[@id='s2id_location_to']/a");
 
-    //Date picker module
+    //Date picker module --------------------------------------------------------------------------------------------
     private By textfieldDepartDate = By.id("FlightsDateStart");
     private By dataTableDepart = By.xpath("//*[@id='datepickers-container']/div[9]/div/div[1]/div/div[contains(text(),'20')]");
     private By textfieldReturnDate = By.id("FlightsDateEnd");
