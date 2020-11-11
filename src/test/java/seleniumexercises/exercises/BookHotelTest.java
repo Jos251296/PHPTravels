@@ -35,17 +35,21 @@ public class BookHotelTest {
                 .clickSubmitHotel();
 
         new BookHotelPage(driver)
+                .getSearchConfirmation()
                 .selectRadioButton("2")
-                .viewMoreButton()
                 .selectFilters("Night Club", "SPA")
                 .selectPriceRange(50,1000)
                 .setPropertyType("Hotel")
                 .setPriceFilter("Low to High")
-                .searchButton("Yes")
-                .setModifyYesOrNo("No")
+                .searchButton(true)
+                .setModify(false)
                 .setNewDestination("Alzer")
                 .setDropdownDates(20,24)
+                .setModifySearch()
                 .buttonDetailsFirstHotel();
+
+        new BookHotelRoomPage(driver)
+                .getHotelSelectedConfirmation();
 
     }
 
