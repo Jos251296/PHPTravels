@@ -1,12 +1,7 @@
 package seleniumexercises.pages;
 
-import net.bytebuddy.asm.Advice;
 import org.openqa.selenium.By;
-import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 import seleniumexercises.helpers.SeleniumHelpers;
 
 public class SearchForFlightsPage {
@@ -59,6 +54,7 @@ public class SearchForFlightsPage {
         selenium.dropdown(textfieldCountryFrom, textfieldCountryFrom, origin);
         selenium.click(By.xpath(String.format("//div[@class='select2-result-label']//span[text()='%s']", origin)));
 
+        selenium.dropdown(textfieldCountryTo, textfieldCountryTo, destination);
         selenium.dropdown(textfieldCountryTo, textfieldCountryTo, destination);
         selenium.click(By.xpath(String.format("//div[@class='select2-result-label']//span[text()='%s']", destination)));
         return this;

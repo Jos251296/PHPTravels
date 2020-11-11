@@ -1,5 +1,4 @@
 package seleniumexercises.exercises;
-import seleniumexercises.helpers.GetDateClass;
 import seleniumexercises.pages.*;
 import org.junit.*;
 import org.openqa.selenium.WebDriver;
@@ -53,8 +52,6 @@ public class VisaApplicationTest {
         new VisaInvoicePage(driver)
                 .getInvoiceResult();
     }
-
-
 
     @After
         public void stopBrowser() {

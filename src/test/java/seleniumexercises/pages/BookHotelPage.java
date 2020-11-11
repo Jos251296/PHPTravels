@@ -1,15 +1,10 @@
 package seleniumexercises.pages;
 
-import net.bytebuddy.asm.Advice;
 import org.openqa.selenium.By;
-import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.interactions.Action;
 import org.openqa.selenium.interactions.Actions;
 import seleniumexercises.helpers.SeleniumHelpers;
-
-import java.awt.print.Book;
 
 public class BookHotelPage {
 
@@ -17,7 +12,7 @@ public class BookHotelPage {
     private WebDriver driver;
     private SeleniumHelpers selenium;
 
-    //Select Hotel functions ---------------------------------------------------------------------------------
+    //Select Hotel selectors ---------------------------------------------------------------------------------
     private By displaySearchSubmitted = By.xpath("//h3[@class='heading-title']");
     private By viewMoreButton = By.xpath("//span[contains(text(),'View More (+)')]");
     private By detailsFirstButton = By.xpath("//div[@class='product-long-item-wrapper']/div/div/div[2]/div/div[3]//a");
