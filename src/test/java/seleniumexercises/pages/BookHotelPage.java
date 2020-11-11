@@ -20,7 +20,7 @@ public class BookHotelPage {
     private SeleniumHelpers selenium;
 
     //Select Hotel functions ---------------------------------------------------------------------------------
-
+    private By displaySearchSubmitted = By.xpath("//h3[@class='heading-title']");
     private By viewMoreButton = By.xpath("//span[contains(text(),'View More (+)')]");
     private By detailsFirstButton = By.xpath("//div[@class='product-long-item-wrapper']/div/div/div[2]/div/div[3]//a");
     private By searchButton = By.id("searchform");
@@ -38,6 +38,16 @@ public class BookHotelPage {
     public BookHotelPage(WebDriver driver) {
         this.driver = driver;
         selenium = new SeleniumHelpers(driver);
+    }
+
+    public BookHotelPage getSearchConfirmation(){
+        boolean searchConfirmation = selenium.isDisplayed(displaySearchSubmitted);
+        if(searchConfirmation){
+            System.out.println("Your search has been submitted.");
+        } else{
+            System.out.println("Your query was insufficient.");
+        }
+        return this;
     }
 
     public BookHotelPage selectRadioButton(String starNum){
@@ -84,13 +94,9 @@ public class BookHotelPage {
     }
 
     public BookHotelPage selectFilters(String filter1, String filter2){
+        selenium.click(viewMoreButton);
         selenium.click(By.xpath("//label[@for='" + filter1 + "']"));
         selenium.click(By.xpath("//label[@for='" + filter2 + "']"));
-        return this;
-    }
-
-    public BookHotelPage viewMoreButton(){
-        selenium.click(viewMoreButton);
         return this;
     }
 
@@ -104,8 +110,8 @@ public class BookHotelPage {
         return this;
     }
 
-    public BookHotelPage searchButton(String yesOrNoSearch){
-        if (yesOrNoSearch == "yes" || yesOrNoSearch == "Yes" || yesOrNoSearch == "YES"){
+    public BookHotelPage searchButton(boolean push){
+        if (push){
             selenium.click(searchButton);
         } else {
             System.out.println("Search button is not pressed");
@@ -120,8 +126,8 @@ public class BookHotelPage {
 
     //Detail Hotel functions ---------------------------------------------------------------------------------
 
-    public BookHotelPage setModifyYesOrNo(String modify){
-        if(modify == "Yes" || modify=="yes"){
+    public BookHotelPage setModify(boolean push){
+        if(push){
         selenium.click(modifyButton);
         }
         return this;
@@ -147,7 +153,14 @@ public class BookHotelPage {
             selenium.click(dropdownCheckOut);
             selenium.click(By.xpath(String.format("//div[@id='datepickers-container']/div[1]//div[contains(text(),'%d']", dateCheckOut)));
         }
+        return this;
+    }
 
+    public BookHotelPage setModifySearch(){
+        boolean modifyPageVisible = selenium.isDisplayed(By.xpath("//label[text()='Destination']"));
+        if(modifyPageVisible){
+            selenium.click(modifySearchButton);
+        }
         return this;
     }
 
