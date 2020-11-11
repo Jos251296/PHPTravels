@@ -16,7 +16,13 @@ public class VisaInvoicePage {
         selenium = new SeleniumHelpers(driver);
     }
 
-    public String getInvoiceResult(){
-        return selenium.getElementText(displayStatus);
+    public VisaInvoicePage getInvoiceResult() {
+        boolean visaSubmitted = selenium.isDisplayed(displayStatus);
+        if (visaSubmitted) {
+            System.out.println("Viewing your invoice");
+        } else {
+            System.out.println("Cannot display your visa.");
+        }
+        return this;
     }
 }
