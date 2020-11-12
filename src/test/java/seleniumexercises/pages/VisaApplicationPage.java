@@ -1,5 +1,6 @@
 package seleniumexercises.pages;
 
+import org.junit.Assert;
 import org.openqa.selenium.WebElement;
 import restassuredexercises.Booking;
 import seleniumexercises.helpers.SeleniumHelpers;
@@ -11,7 +12,7 @@ public class VisaApplicationPage {
     private WebDriver driver;
     private SeleniumHelpers selenium;
 
-    private By displayBooking = By.className("collapse-link");
+    private By displayBooking = By.xpath("//a[text()='Visa Booking']");
     private By textfieldFirstName = By.name("first_name");
     private By textfieldLastName = By.name("last_name");
     private By textfieldEmail = By.name("email");
@@ -26,7 +27,8 @@ public class VisaApplicationPage {
         selenium = new SeleniumHelpers(driver);
     }
 
-    public VisaApplicationPage getSubmitResults(){
+    public VisaApplicationPage Should_Assert_That_Page_Is_Loaded(){
+        Assert.assertEquals("Visa Booking", selenium.getElementText(displayBooking));
 
         boolean searchSubmitted = selenium.isDisplayed(displayBooking);
         if(searchSubmitted) {
@@ -37,7 +39,7 @@ public class VisaApplicationPage {
         return this;
     }
 
-    public VisaApplicationPage setPersonalia(String firstName, String lastName, String email, String contactNumber, String additionalRequests){
+    public VisaApplicationPage Shoudld_Set_Personalia(String firstName, String lastName, String email, String contactNumber, String additionalRequests){
 
         selenium.sendKeys(textfieldFirstName, firstName);
         selenium.sendKeys(textfieldLastName, lastName);
@@ -49,7 +51,7 @@ public class VisaApplicationPage {
         return this;
     }
 
-    public void bookingButton() {
+    public void Should_Press_Booking_Button() {
 
         selenium.click(buttonBooking);
     }

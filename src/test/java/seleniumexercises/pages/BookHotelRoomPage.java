@@ -1,5 +1,6 @@
 package seleniumexercises.pages;
 
+import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import seleniumexercises.helpers.SeleniumHelpers;
@@ -10,13 +11,16 @@ public class BookHotelRoomPage {
     private SeleniumHelpers selenium;
 
     private By displayHotelBooked = By.xpath("//h2[@id='detail-content-sticky-nav-00']");
+    private By textfieldToAssert = By.xpath("//span[text()='Overview']");
 
     public BookHotelRoomPage(WebDriver driver) {
         this.driver = driver;
         selenium = new SeleniumHelpers(driver);
     }
 
-    public BookHotelRoomPage getHotelSelectedConfirmation(){
+    public BookHotelRoomPage Should_Assert_That_Page_Is_Loaded(){
+        Assert.assertEquals("Overview", selenium.getElementText(textfieldToAssert));
+
         boolean hotelSelected = selenium.isDisplayed(displayHotelBooked);
         if(hotelSelected){
             System.out.println("You've selected a hotel.");

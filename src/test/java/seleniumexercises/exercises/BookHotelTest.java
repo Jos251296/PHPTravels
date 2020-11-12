@@ -25,31 +25,33 @@ public class BookHotelTest {
                 .load();
 
         new SearchHotelPage(driver)
-                .setTextfieldDestination("Alzer")
-                .setDropdownDates(
+                .Should_Assert_That_Page_Is_Loaded()
+                .Should_Set_Destination("Alzer")
+                .Should_Set_Checkin_And_Checkout_Dates(
                         20,
                         24)
-                .setAmountOfVisitors(
+                .Should_Set_Amount_Of_Visitors(
                         2,
                         0)
-                .clickSubmitHotel();
+                .Should_Submit_Search_Query();
 
         new BookHotelPage(driver)
-                .getSearchConfirmation()
-                .selectRadioButton("2")
-                .selectFilters("Night Club", "SPA")
-                .selectPriceRange(50,1000)
-                .setPropertyType("Hotel")
-                .setPriceFilter("Low to High")
-                .searchButton(true)
-                .setModify(false)
-                .setNewDestination("Alzer")
-                .setDropdownDates(20,24)
-                .setModifySearch()
-                .buttonDetailsFirstHotel();
+                .Should_Assert_That_Page_Is_Loaded()
+                .Should_Select_Star_Grade("2")
+                .Should_Select_Lower_And_Upper_PriceRange(50,1000)
+                .Should_Select_Hotel_Amenities("Night Club", "SPA")
+                .Should_Set_Property_Type("Hotel")
+                .Should_Set_Price_Filter("Low to High")
+                .Should_Press_Search_Button(true)
+                .Should_Press_Button_To_Modify_Original_Input(false)
+                .Should_Modify_Original_Search_Query(
+                        "Alzer",
+                        20,
+                        24)
+                .Should_Select_First_Hotel();
 
         new BookHotelRoomPage(driver)
-                .getHotelSelectedConfirmation();
+                .Should_Assert_That_Page_Is_Loaded();
 
     }
 

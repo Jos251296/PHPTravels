@@ -1,5 +1,6 @@
 package seleniumexercises.pages;
 
+import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -13,6 +14,7 @@ public class BookHotelPage {
     private SeleniumHelpers selenium;
 
     //Select Hotel selectors ---------------------------------------------------------------------------------
+    private By textfieldToAssert = By.xpath("//h4[text()='Filter Search']");
     private By displaySearchSubmitted = By.xpath("//h3[@class='heading-title']");
     private By viewMoreButton = By.xpath("//span[contains(text(),'View More (+)')]");
     private By detailsFirstButton = By.xpath("//div[@class='product-long-item-wrapper']/div/div/div[2]/div/div[3]//a");
@@ -33,7 +35,9 @@ public class BookHotelPage {
         selenium = new SeleniumHelpers(driver);
     }
 
-    public BookHotelPage getSearchConfirmation(){
+    public BookHotelPage Should_Assert_That_Page_Is_Loaded(){
+        Assert.assertEquals("Filter Search", selenium.getElementText(textfieldToAssert));
+
         boolean searchConfirmation = selenium.isDisplayed(displaySearchSubmitted);
         if(searchConfirmation){
             System.out.println("Your search has been submitted.");
@@ -43,12 +47,12 @@ public class BookHotelPage {
         return this;
     }
 
-    public BookHotelPage selectRadioButton(String starNum){
+    public BookHotelPage Should_Select_Star_Grade(String starNum){
         selenium.click(By.xpath("//label[@for='" + starNum + "']"));
         return this;
     }
 
-    public BookHotelPage selectPriceRange(int lower, int upper){
+    public BookHotelPage Should_Select_Lower_And_Upper_PriceRange(int lower, int upper){
 
     /**
  * xpath to button lower price is //span[@class='irs-slider from'] (hotels)
@@ -86,24 +90,24 @@ public class BookHotelPage {
         return this;
     }
 
-    public BookHotelPage selectFilters(String filter1, String filter2){
+    public BookHotelPage Should_Select_Hotel_Amenities(String filter1, String filter2){
         selenium.click(viewMoreButton);
         selenium.click(By.xpath("//label[@for='" + filter1 + "']"));
         selenium.click(By.xpath("//label[@for='" + filter2 + "']"));
         return this;
     }
 
-    public BookHotelPage setPropertyType(String propertyType){
+    public BookHotelPage Should_Set_Property_Type(String propertyType){
         selenium.click(By.xpath("//label[@for='" + propertyType + "']"));
         return this;
     }
 
-    public BookHotelPage setPriceFilter(String priceFilter){
+    public BookHotelPage Should_Set_Price_Filter(String priceFilter){
         selenium.click(By.xpath("//label[contains(text(),'" + priceFilter + "')]"));
         return this;
     }
 
-    public BookHotelPage searchButton(boolean push){
+    public BookHotelPage Should_Press_Search_Button(boolean push){
         if (push){
             selenium.click(searchButton);
         } else {
@@ -112,48 +116,34 @@ public class BookHotelPage {
         return this;
     }
 
-    public BookHotelPage buttonDetailsFirstHotel(){
+    public BookHotelPage Should_Select_First_Hotel(){
         selenium.click(detailsFirstButton);
         return this;
     }
 
     //Detail Hotel functions ---------------------------------------------------------------------------------
 
-    public BookHotelPage setModify(boolean push){
+    public BookHotelPage Should_Press_Button_To_Modify_Original_Input(boolean push){
         if(push){
         selenium.click(modifyButton);
         }
         return this;
     }
 
-    public BookHotelPage setNewDestination(String destination){
+    public BookHotelPage Should_Modify_Original_Search_Query(String destination, int dateCheckIn, int dateCheckOut){
 
         boolean modifyPageVisible = selenium.isDisplayed(By.xpath("//label[text()='Destination']"));
         if(modifyPageVisible) {
             selenium.dropdown(textfieldNewDestination, textfieldNewDestination, destination);
         }
-        return this;
-    }
 
-    public BookHotelPage setDropdownDates (int dateCheckIn, int dateCheckOut){
+        selenium.click(dropdownCheckIn);
+        selenium.click(By.xpath(String.format("//div[@id='datepickers-container']/div[1]//div[contains(text(),'%d']", dateCheckIn)));
 
-        boolean modifyPageVisible = selenium.isDisplayed(By.xpath("//label[text()='Destination']"));
-        if(modifyPageVisible){
+        selenium.click(dropdownCheckOut);
+        selenium.click(By.xpath(String.format("//div[@id='datepickers-container']/div[1]//div[contains(text(),'%d']", dateCheckOut)));
 
-            selenium.click(dropdownCheckIn);
-            selenium.click(By.xpath(String.format("//div[@id='datepickers-container']/div[1]//div[contains(text(),'%d']", dateCheckIn)));
-
-            selenium.click(dropdownCheckOut);
-            selenium.click(By.xpath(String.format("//div[@id='datepickers-container']/div[1]//div[contains(text(),'%d']", dateCheckOut)));
-        }
-        return this;
-    }
-
-    public BookHotelPage setModifySearch(){
-        boolean modifyPageVisible = selenium.isDisplayed(By.xpath("//label[text()='Destination']"));
-        if(modifyPageVisible){
-            selenium.click(modifySearchButton);
-        }
+        selenium.click(modifySearchButton);
         return this;
     }
 

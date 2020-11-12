@@ -1,5 +1,6 @@
 package seleniumexercises.pages;
 
+import org.junit.Assert;
 import seleniumexercises.helpers.GetDateClass;
 import seleniumexercises.helpers.SeleniumHelpers;
 import org.openqa.selenium.By;
@@ -11,6 +12,7 @@ public class SearchForVisaPage {
     private WebDriver driver;
     private SeleniumHelpers selenium;
 
+    private By textfieldToAssert = By.xpath("//a[@data-name='visa']");
     private By dropdownFromCountry = By.xpath("//select[@name='nationality_country']/following-sibling::div");
     private By textfieldFromCountry = By.xpath("//select[@name='nationality_country']/following-sibling::div//input[@class='chosen-search-input']");
     private By dropdownNationalityList = By.xpath("//select[@name='nationality_country']/following-sibling::div//li");
@@ -27,7 +29,12 @@ public class SearchForVisaPage {
         selenium = new SeleniumHelpers(driver);
     }
 
-    public SearchForVisaPage setOriginAndDestination(String countryOfOrigin, String countryToVisit){
+    public SearchForVisaPage Should_Assert_Page_Is_Loaded(){
+        Assert.assertEquals("VISA", selenium.getElementText(textfieldToAssert));
+        return this;
+    }
+
+    public SearchForVisaPage Should_Set_Origin_And_Destination(String countryOfOrigin, String countryToVisit){
 
         selenium.dropdown(dropdownFromCountry, textfieldFromCountry, countryOfOrigin);
         selenium.click(By.xpath(String.format("//li/em[text()='%s']", countryOfOrigin)));
@@ -37,7 +44,7 @@ public class SearchForVisaPage {
         return this;
     }
 
-    public SearchForVisaPage setDate (){
+    public SearchForVisaPage Should_Set_Date(){
 
         GetDateClass date = new GetDateClass();
         String currentDate = date.getCurrentDate();
@@ -46,7 +53,7 @@ public class SearchForVisaPage {
         return this;
     }
 
-    public void submit (){
+    public void Should_Submit_Query(){
 
         selenium.click(buttonSubmit);
 

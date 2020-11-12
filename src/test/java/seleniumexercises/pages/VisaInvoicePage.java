@@ -1,5 +1,6 @@
 package seleniumexercises.pages;
 
+import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import seleniumexercises.helpers.SeleniumHelpers;
@@ -16,7 +17,9 @@ public class VisaInvoicePage {
         selenium = new SeleniumHelpers(driver);
     }
 
-    public VisaInvoicePage getInvoiceResult() {
+    public VisaInvoicePage Should_Assert_Page_Is_Loaded() {
+        Assert.assertEquals("Your booking status is waiting", selenium.getElementText(displayStatus));
+
         boolean visaSubmitted = selenium.isDisplayed(displayStatus);
         if (visaSubmitted) {
             System.out.println("Viewing your invoice");

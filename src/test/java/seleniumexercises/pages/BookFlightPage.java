@@ -1,5 +1,6 @@
 package seleniumexercises.pages;
 
+import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -13,6 +14,7 @@ public class BookFlightPage {
     private WebDriver driver;
     private SeleniumHelpers selenium;
 
+    private By textfieldToBeAsserted = By.xpath("//h4[text()='Filter Search']");
     private By textfieldSearchValidated = By.className("heading-title");
     private By selectDirect = By.xpath("//label[@for='0']");
     private By buttonViewMore = By.xpath("//span[text()='View More (+)']");
@@ -32,7 +34,9 @@ public class BookFlightPage {
         selenium = new SeleniumHelpers(driver);
     }
 
-    public BookFlightPage setSearchValidated(){
+    public BookFlightPage Should_Assert_That_Page_Is_Loaded(){
+        Assert.assertEquals("Filter Search", selenium.getElementText(textfieldToBeAsserted));
+
         boolean hotelSelected = selenium.isDisplayed(textfieldSearchValidated);
         if(hotelSelected){
             System.out.println("Your search has been submitted.");
@@ -42,14 +46,14 @@ public class BookFlightPage {
         return this;
     }
 
-    public BookFlightPage setDirect(boolean yes){
+    public BookFlightPage Should_Set_Direct_Flight(boolean yes){
         if(yes){
             selenium.click(selectDirect);
         }
         return this;
     }
 
-    public BookFlightPage setPriceRange(int lower, int upper){
+    public BookFlightPage Should_Set_Lower_And_Upper_PriceRange(int lower, int upper){
 /**
  * xpath to button lower price is //span[@class='irs-slider from'] (hotels)
  * of //span[@class='irs-slider from type_last']
@@ -83,27 +87,30 @@ public class BookFlightPage {
         return this;
     }
 
-    public BookFlightPage setSelectAirlines (String airlines) {
-        selenium.click(buttonViewMore);
-        selenium.click(By.xpath("//span[contains(text(),'" + airlines + "')]"));
+    public BookFlightPage Should_Set_Airline_Company (boolean selectAirline, String airlineCompany) {
+        if(selectAirline) {
+            selenium.click(buttonViewMore);
+            selenium.click(By.xpath("//span[contains(text(),'" + airlineCompany + "')]"));
+        }
         return this;
     }
 
-    public BookFlightPage setSpecifySearch(boolean yes){
+    public BookFlightPage Should_Press_Search_Button_To_Narrow_Down_Options(boolean yes){
         if(yes){
             selenium.click(buttonSpecifiedSearch);
         }
         return this;
     }
 
-    public BookFlightPage setModifySearch(boolean yes){
+    public BookFlightPage Should_Press_Button_To_Modify_Original_Input(boolean yes){
         if(yes){
             selenium.click(buttonModifySearch);
         }
         return this;
     }
 
-    public BookFlightPage setOneWay(boolean oneWay){
+    public BookFlightPage Should_Modify_Original_Search_Query
+            (boolean oneWay, String flightClass, String origin, String destination, int dateDepart){
         boolean modifySearch = selenium.isDisplayed(By.xpath("//label[text()='From']"));
         if(modifySearch){
             if(oneWay){
@@ -111,52 +118,26 @@ public class BookFlightPage {
             } else {
                 selenium.click(buttonRoundTrip);
             }
-        }
-        return this;
-    }
 
-    public BookFlightPage setNewFlightClass(String flightClass){
-        boolean modifySearch = selenium.isDisplayed(By.xpath("//label[text()='From']"));
-        if(modifySearch){
             selenium.click(dropdownFlightClass);
             selenium.click(By.xpath(String.format("//ul//li[contains(text(), '%s')]", flightClass)));
-        }
-        return this;
-    }
 
-    public BookFlightPage setNewOriginAndDestination(String countryFrom, String countryTo){
-        boolean modifySearch = selenium.isDisplayed(By.xpath("//label[text()='From']"));
-        if(modifySearch){
-            selenium.dropdown(textfieldCountryFrom, textfieldCountryFrom, countryTo);
-            selenium.click(By.xpath(String.format("//div[@class='select2-result-label']//span[text()='%s']", countryFrom)));
-            selenium.dropdown(textfieldCountryTo, textfieldCountryTo, countryFrom);
-            selenium.click(By.xpath(String.format("//div[@class='select2-result-label']//span[text()='%s']", countryTo)));
-        }
-        return this;
-    }
+            selenium.dropdown(textfieldCountryFrom, textfieldCountryFrom, origin);
+            selenium.click(By.xpath(String.format("//div[@class='select2-result-label']//span[text()='%s']", origin)));
+            selenium.dropdown(textfieldCountryTo, textfieldCountryTo, destination);
+            selenium.click(By.xpath(String.format("//div[@class='select2-result-label']//span[text()='%s']", destination)));
 
-    public BookFlightPage setNewDepartDate(int dateDepart){
-        boolean modifySearch = selenium.isDisplayed(By.xpath("//label[text()='From']"));
-        if(modifySearch){
             selenium.click(dropdownDepartDate);
             selenium.click(By.xpath(String.format("//div[@id='datepickers-container']/div[1]//div[contains(text(),'%d']", dateDepart)));
-        }
-        return this;
-    }
 
-    public BookFlightPage buttonSearchModified(){
-        boolean modifySearch = selenium.isDisplayed(By.xpath("//label[text()='From']"));
-        if(modifySearch){
             selenium.click(buttonSearchModified);
         }
         return this;
     }
 
-    public BookFlightPage buttonBookFirstFlight(){
+    public BookFlightPage Should_Select_First_Option_Available(){
         selenium.click(buttonBook);
         return this;
     }
-
-
 
 }

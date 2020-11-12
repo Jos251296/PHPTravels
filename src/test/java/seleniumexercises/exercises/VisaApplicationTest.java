@@ -25,32 +25,33 @@ public class VisaApplicationTest {
                 .selectMenuItem("Visa");
 
         new SearchForVisaPage(driver)
-                .setOriginAndDestination(
+                .Should_Assert_Page_Is_Loaded()
+                .Should_Set_Origin_And_Destination(
                         "American Samoa",
                         "Saudi Arabia")
-                .setDate()
-                .submit();
+                .Should_Set_Date()
+                .Should_Submit_Query();
 
         new VisaApplicationPage(driver)
-                .getSubmitResults()
-                .setPersonalia(
+                .Should_Assert_That_Page_Is_Loaded()
+                .Shoudld_Set_Personalia(
                         "Holly",
                         "Day",
                         "holly_day@badpuns.com",
                         "420-555-6969",
                         "A curious sperm whale and an exasperated bowl of petunias")
-                .bookingButton();
+                .Should_Press_Booking_Button();
 
         /**
          * setViewInvoice requires a "Yes" or "yes" statement to continue to the invoice
          */
         new VisaConfirmationPage(driver)
-                .getVisaSubmittedResult()
-                .getReservationCode()
-                .setViewInvoice(true);
+                .Should_Assert_Page_Is_Loaded()
+                .Should_Get_Reservation_Code()
+                .Should_Press_Button_To_View_Invoice(true);
 
         new VisaInvoicePage(driver)
-                .getInvoiceResult();
+                .Should_Assert_Page_Is_Loaded();
     }
 
     @After

@@ -1,5 +1,6 @@
 package seleniumexercises.pages;
 
+import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import seleniumexercises.helpers.SeleniumHelpers;
@@ -20,24 +21,26 @@ public class VisaConfirmationPage {
         selenium = new SeleniumHelpers(driver);
     }
 
-    public VisaConfirmationPage getVisaSubmittedResult(){
+    public VisaConfirmationPage Should_Assert_Page_Is_Loaded(){
+        Assert.assertEquals("Visa Submitted", selenium.getElementText(displayVisaSubmitted));
+
         boolean visaSubmitted = selenium.isDisplayed(displayVisaSubmitted);
         if (visaSubmitted){
-            System.out.println("Your visa has been submitted");
+            System.out.println("Your visa has been submitted.");
         } else {
-            System.out.println("Your visa has not been submitted");
+            System.out.println("Your visa has not been submitted.");
         }
 
         return this;
     }
 
-    public VisaConfirmationPage getReservationCode(){
+    public VisaConfirmationPage Should_Get_Reservation_Code(){
         String reservationCode = selenium.getElementText(displayReservationCode);
         System.out.println("Your reservation code is: " + reservationCode);
         return this;
     }
 
-    public VisaConfirmationPage setViewInvoice(boolean view){
+    public VisaConfirmationPage Should_Press_Button_To_View_Invoice(boolean view){
 
         if(view){
             selenium.click(buttonViewInvoice);

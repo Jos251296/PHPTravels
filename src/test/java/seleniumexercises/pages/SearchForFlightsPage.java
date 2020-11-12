@@ -1,5 +1,6 @@
 package seleniumexercises.pages;
 
+import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import seleniumexercises.helpers.SeleniumHelpers;
@@ -9,6 +10,7 @@ public class SearchForFlightsPage {
     private WebDriver driver;
     private SeleniumHelpers selenium;
 
+    private By textfieldToAssert = By.xpath("//a[@data-name='flights']");
     private By buttonOneWay = By.xpath("//label[@for='flightSearchRadio-2']");
     private By buttonRoundTrip = By.xpath("//label[@for='flightSearchRadio-1']");
     private By dropDownFlightClass = By.xpath("//select[@name='cabinclass']/following-sibling::div");
@@ -35,22 +37,27 @@ public class SearchForFlightsPage {
         selenium = new SeleniumHelpers(driver);
     }
 
-    public SearchForFlightsPage setOneWayOrRoundTrip(String radioButton) {
-        if(radioButton == "Round Trip" || radioButton == "round trip" || radioButton == "ROUND TRIP"){
-            selenium.click(buttonRoundTrip);
-        } else {
+    public SearchForFlightsPage Should_Assert_Page_Is_Loaded(){
+        Assert.assertEquals("FLIGHTS", selenium.getElementText(textfieldToAssert));
+        return this;
+    }
+
+    public SearchForFlightsPage Should_Select_OneWay(boolean oneWay) {
+        if(oneWay){
             selenium.click(buttonOneWay);
+        } else {
+            selenium.click(buttonRoundTrip);
         }
         return this;
     }
 
-    public SearchForFlightsPage setFlightClass (String flightClass) {
+    public SearchForFlightsPage Should_Select_Flight_Class(String flightClass) {
         selenium.click(dropDownFlightClass);
         selenium.click(By.xpath(String.format("//ul[@class='chosen-results']//li[text()='%s']", flightClass)));
         return this;
     }
 
-    public SearchForFlightsPage setOriginAndDestination(String origin, String destination){
+    public SearchForFlightsPage Should_Set_Origin_And_Destination(String origin, String destination){
         selenium.dropdown(textfieldCountryFrom, textfieldCountryFrom, origin);
         selenium.click(By.xpath(String.format("//div[@class='select2-result-label']//span[text()='%s']", origin)));
 
@@ -60,20 +67,21 @@ public class SearchForFlightsPage {
         return this;
     }
 
-    public SearchForFlightsPage setDepartDate() {
+    public SearchForFlightsPage Should_Set_Depart_And_Return_Date() {
 
         selenium.click(textfieldDepartDate);
         selenium.click(dataTableDepart);
+
+        boolean returnDateAvailable = selenium.isDisplayed(textfieldReturnDate);
+        if(returnDateAvailable){
+            selenium.click(textfieldReturnDate);
+            selenium.click(dataTableReturn);
+        }
         return this;
     }
 
-    public SearchForFlightsPage setReturnDate() {
-        selenium.click(textfieldReturnDate);
-        selenium.click(dataTableReturn);
-        return this;
-    }
 
-    public SearchForFlightsPage setNumberOfPassengers(int amountOfAdults, int amountOfChildren, int amountOfInfants){
+    public SearchForFlightsPage Should_Set_Number_Of_Passengers(int amountOfAdults, int amountOfChildren, int amountOfInfants){
 
         int placeholderValue =
                 Integer.parseInt(driver.findElement(By.xpath("//input[@name='fadults']")).getAttribute("value"));
@@ -98,7 +106,7 @@ public class SearchForFlightsPage {
         return this;
     }
 
-    public SearchForFlightsPage setSearchButton() {
+    public SearchForFlightsPage Should_Press_Search_Button() {
         selenium.click(buttonSearch);
         return this;
     }

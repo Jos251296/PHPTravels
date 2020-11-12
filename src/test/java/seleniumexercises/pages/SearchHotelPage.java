@@ -1,5 +1,6 @@
 package seleniumexercises.pages;
 
+import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import seleniumexercises.helpers.SeleniumHelpers;
@@ -9,6 +10,7 @@ public class SearchHotelPage {
     private WebDriver driver;
     private SeleniumHelpers selenium;
 
+    private By textfieldToAssert = By.xpath("//a[@data-name='hotels']");
     private By textfieldDestination = By.xpath("//div[@id='hotels']/div//a");
     private By dropdownCheckIn = By.id("checkin");
     private By dropdownCheckOut = By.id("checkout");
@@ -24,15 +26,19 @@ public class SearchHotelPage {
         selenium = new SeleniumHelpers(driver);
     }
 
+    public SearchHotelPage Should_Assert_That_Page_Is_Loaded(){
+        Assert.assertEquals("HOTELS", selenium.getElementText(textfieldToAssert));
+        return this;
+    }
 
-    public SearchHotelPage setTextfieldDestination (String destination){
+    public SearchHotelPage Should_Set_Destination(String destination){
 
         selenium.dropdown(textfieldDestination, textfieldDestination, destination);
         selenium.click(By.xpath("//div/span[@class='select2-match']"));
         return this;
     }
 
-    public SearchHotelPage setDropdownDates (int dateCheckIn, int dateCheckOut){
+    public SearchHotelPage Should_Set_Checkin_And_Checkout_Dates(int dateCheckIn, int dateCheckOut){
 
         selenium.click(dropdownCheckIn);
         selenium.click(By.xpath(String.format("//div[@id='datepickers-container']//div[contains(text(),'%d')]", dateCheckIn)));
@@ -42,7 +48,7 @@ public class SearchHotelPage {
         return this;
     }
 
-    public SearchHotelPage setAmountOfVisitors(int adultNum, int childrenNum){
+    public SearchHotelPage Should_Set_Amount_Of_Visitors(int adultNum, int childrenNum){
 
         int placeholderValue =
                 Integer.parseInt(driver.findElement(By.xpath("//input[@name='adults']")).getAttribute("value"));
@@ -63,7 +69,7 @@ public class SearchHotelPage {
         return this;
     }
 
-    public SearchHotelPage clickSubmitHotel(){
+    public SearchHotelPage Should_Submit_Search_Query(){
         selenium.click(submitHotelButton);
         return this;
     }
