@@ -28,6 +28,12 @@ public class SearchHotelPage {
 
     public SearchHotelPage Should_Assert_That_Page_Is_Loaded(){
         Assert.assertEquals("HOTELS", selenium.getElementText(textfieldToAssert));
+        boolean searchQuery = selenium.isDisplayed(textfieldToAssert);
+        if(searchQuery){
+            System.out.println("Entering search query.");
+        } else {
+            System.out.println("Cannot open HOTELS tab.");
+        }
         return this;
     }
 

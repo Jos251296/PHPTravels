@@ -38,7 +38,14 @@ public class SearchForFlightsPage {
     }
 
     public SearchForFlightsPage Should_Assert_Page_Is_Loaded(){
+
         Assert.assertEquals("FLIGHTS", selenium.getElementText(textfieldToAssert));
+        boolean searchQuery = selenium.isDisplayed(textfieldToAssert);
+        if(searchQuery){
+            System.out.println("Entering search query.");
+        } else {
+            System.out.println("Cannot open FLIGHTS tab.");
+        }
         return this;
     }
 

@@ -37,14 +37,17 @@ public class BookHotelTest {
 
         new BookHotelPage(driver)
                 .Should_Assert_That_Page_Is_Loaded()
-                .Should_Select_Star_Grade("2")
-                .Should_Select_Lower_And_Upper_PriceRange(50,1000)
-                .Should_Select_Hotel_Amenities("Night Club", "SPA")
-                .Should_Set_Property_Type("Hotel")
-                .Should_Set_Price_Filter("Low to High")
-                .Should_Press_Search_Button(true)
-                .Should_Press_Button_To_Modify_Original_Input(false)
+                .Should_Filter_Search_Result(
+                        false,
+                        "2",
+                        50,
+                        1000,
+                        "Night Club",
+                        "SPA",
+                        "Hotel",
+                        true)
                 .Should_Modify_Original_Search_Query(
+                        false,
                         "Alzer",
                         20,
                         24)

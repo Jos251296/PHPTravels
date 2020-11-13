@@ -41,12 +41,14 @@ public class BookFlightTest {
 
         new BookFlightPage(driver)
                 .Should_Assert_That_Page_Is_Loaded()
-                .Should_Set_Direct_Flight(false)
-                .Should_Set_Lower_And_Upper_PriceRange(1, 300)
-                .Should_Set_Airline_Company(false,"")
-                .Should_Press_Search_Button_To_Narrow_Down_Options(false)
-                .Should_Press_Button_To_Modify_Original_Input(false)
+                .Should_Filter_Search_Results(
+                        false,
+                        false,
+                        1,
+                        300,
+                        "")
                 .Should_Modify_Original_Search_Query(
+                        false,
                         true,
                         "Economy",
                         "Pago Pago",

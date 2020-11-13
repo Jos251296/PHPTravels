@@ -30,7 +30,14 @@ public class SearchForVisaPage {
     }
 
     public SearchForVisaPage Should_Assert_Page_Is_Loaded(){
+
         Assert.assertEquals("VISA", selenium.getElementText(textfieldToAssert));
+        boolean searchQuery = selenium.isDisplayed(textfieldToAssert);
+        if(searchQuery){
+            System.out.println("Entering search query.");
+        } else {
+            System.out.println("Cannot open VISA tab.");
+        }
         return this;
     }
 

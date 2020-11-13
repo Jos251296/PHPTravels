@@ -10,7 +10,7 @@ public class BookFlightPassengerPage {
     private WebDriver driver;
     private SeleniumHelpers selenium;
 
-    private By textfieldFlightSelectedConfirm = By.xpath("//h4[text()='Booking Summary']");
+    private By textfieldToAssert = By.xpath("//h4[text()='Booking Summary']");
 
     public BookFlightPassengerPage(WebDriver driver){
         this.driver = driver;
@@ -18,13 +18,13 @@ public class BookFlightPassengerPage {
     }
 
     public BookFlightPassengerPage Should_Assert_That_Page_Is_Loaded(){
-        Assert.assertEquals("Booking Summary", selenium.getElementText(textfieldFlightSelectedConfirm));
+        Assert.assertEquals("Booking Summary", selenium.getElementText(textfieldToAssert));
 
-        boolean flightSelected = selenium.isDisplayed(textfieldFlightSelectedConfirm);
+        boolean flightSelected = selenium.isDisplayed(textfieldToAssert);
         if(flightSelected){
-            System.out.println("You have selected a flight, entering personalia.");
+            System.out.println("Selected a flight, entering personalia.");
         } else {
-            System.out.println("You haven't selected a flight.");
+            System.out.println("Cannot select a flight.");
         }
         return this;
     }

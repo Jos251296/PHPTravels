@@ -15,8 +15,9 @@ public class BookHotelPage {
 
     //Select Hotel selectors ---------------------------------------------------------------------------------
     private By textfieldToAssert = By.xpath("//h4[text()='Filter Search']");
-    private By displaySearchSubmitted = By.xpath("//h3[@class='heading-title']");
     private By viewMoreButton = By.xpath("//span[contains(text(),'View More (+)')]");
+    private By buttonHighToLow = By.xpath("//label[text()='High to Low']");
+    private By buttonLowToHigh = By.xpath("//label[text()='Low to High']");
     private By detailsFirstButton = By.xpath("//div[@class='product-long-item-wrapper']/div/div/div[2]/div/div[3]//a");
     private By searchButton = By.id("searchform");
 
@@ -38,83 +39,66 @@ public class BookHotelPage {
     public BookHotelPage Should_Assert_That_Page_Is_Loaded(){
         Assert.assertEquals("Filter Search", selenium.getElementText(textfieldToAssert));
 
-        boolean searchConfirmation = selenium.isDisplayed(displaySearchSubmitted);
-        if(searchConfirmation){
-            System.out.println("Your search has been submitted.");
+        boolean queryConfirmation = selenium.isDisplayed(textfieldToAssert);
+        if(queryConfirmation){
+            System.out.println("Your search query has been submitted.");
         } else{
             System.out.println("Your query was insufficient.");
         }
         return this;
     }
 
-    public BookHotelPage Should_Select_Star_Grade(String starNum){
-        selenium.click(By.xpath("//label[@for='" + starNum + "']"));
-        return this;
-    }
+    public BookHotelPage Should_Filter_Search_Result(
+            boolean filterSearch, String starRating, int lowerPrice, int upperPrice, String amenities1, String amenities2,
+            String propertyType, boolean highToLow){
 
-    public BookHotelPage Should_Select_Lower_And_Upper_PriceRange(int lower, int upper){
+        if(filterSearch){
+            selenium.click(By.xpath("//label[@for='" + starRating + "']"));
 
-    /**
- * xpath to button lower price is //span[@class='irs-slider from'] (hotels)
- * of //span[@class='irs-slider from type_last']
- * xpath to button higher price is //span[@class='irs-slider to']
- * lower value is weergegeven hier (getText om mee te rekenen): //span[@class="irs-grid-text js-grid-text-0"]
- * lower % is altijd 0%
- * upper value is weergegeven hier (getText om mee te rekenen): //span[@class="irs-grid-text js-grid-text-4"]
- * upper % is altijd 91.4894%
- *
- * (double lower / double upperValue) * upperPercentage = specifiedLowerPercentage
- * (double upper / double upperValue) * upperPercentage = specifiedUpperPercentage
- */
+            /***************************************************************************************************
+             * Laagste bedrag in slidebar is in paginacode gelijk aan 0%
+             * Hoogste bedrag in slidebar is in paginacode gelijk aan 91.4894%
+             * (double lower * double upperValue) * upperPercentage = specifiedLowerPercentage (i.e. lowerPrice)
+             * (double upper * double upperValue) * upperPercentage = specifiedUpperPercentage (i.e. upperPrice)
+             ***************************************************************************************************/
 
-        String highestPrice = driver.findElement(By.xpath("//span[@class='irs-grid-text js-grid-text-4']")).getText();
-        highestPrice = highestPrice.replaceAll("\\s","");
-        double upperValue = Double.parseDouble(highestPrice);
+            String highestPrice = driver.findElement(By.xpath("//span[@class='irs-grid-text js-grid-text-4']")).getText();
+            highestPrice = highestPrice.replaceAll("\\s","");
+            double upperValue = Double.parseDouble(highestPrice);
 
-        double specifiedLowerPercentage = (lower / upperValue) * 91.4894;
-        int roundedSpecifiedLower = (int) Math.round(specifiedLowerPercentage);
+            double specifiedLowerPercentage = (lowerPrice / upperValue) * 91.4894;
+            int roundedSpecifiedLower = (int) Math.round(specifiedLowerPercentage);
 
-        WebElement slideLower = driver.findElement(By.xpath("//span[@class='irs-slider from']"));
-        Actions moveUp = new Actions(driver);
-        moveUp.dragAndDropBy(slideLower, roundedSpecifiedLower, 0);
-        moveUp.perform();
+            WebElement slideLower = driver.findElement(By.xpath("//span[@class='irs-slider from']"));
+            Actions moveUp = new Actions(driver);
+            moveUp.dragAndDropBy(slideLower, roundedSpecifiedLower, 0);
+            moveUp.perform();
 
-        double specifiedUpperPercentage = (upper / upperValue) * 91.4894;
-        int roundedSpecifiedUpper = (int) Math.round(specifiedUpperPercentage);
+            double specifiedUpperPercentage = (upperPrice / upperValue) * 91.4894;
+            int roundedSpecifiedUpper = (int) Math.round(specifiedUpperPercentage);
 
-        WebElement slideUpper = driver.findElement(By.xpath("//span[@class='irs-slider to']"));
-        Actions moveDown = new Actions(driver);
-        moveDown.dragAndDropBy(slideUpper, roundedSpecifiedUpper, 0);
-        moveDown.perform();
+            WebElement slideUpper = driver.findElement(By.xpath("//span[@class='irs-slider to']"));
+            Actions moveDown = new Actions(driver);
+            moveDown.dragAndDropBy(slideUpper, roundedSpecifiedUpper, 0);
+            moveDown.perform();
 
-        return this;
-    }
+            selenium.click(viewMoreButton);
+            selenium.click(By.xpath("//label[@for='" + amenities1 + "']"));
+            selenium.click(By.xpath("//label[@for='" + amenities2 + "']"));
 
-    public BookHotelPage Should_Select_Hotel_Amenities(String filter1, String filter2){
-        selenium.click(viewMoreButton);
-        selenium.click(By.xpath("//label[@for='" + filter1 + "']"));
-        selenium.click(By.xpath("//label[@for='" + filter2 + "']"));
-        return this;
-    }
+            selenium.click(By.xpath("//label[@for='" + propertyType + "']"));
 
-    public BookHotelPage Should_Set_Property_Type(String propertyType){
-        selenium.click(By.xpath("//label[@for='" + propertyType + "']"));
-        return this;
-    }
+            if(highToLow){
+                selenium.click(buttonHighToLow);
+            } else {
+                selenium.click(buttonLowToHigh);
+            }
 
-    public BookHotelPage Should_Set_Price_Filter(String priceFilter){
-        selenium.click(By.xpath("//label[contains(text(),'" + priceFilter + "')]"));
-        return this;
-    }
-
-    public BookHotelPage Should_Press_Search_Button(boolean push){
-        if (push){
             selenium.click(searchButton);
-        } else {
-            System.out.println("Search button is not pressed");
         }
         return this;
     }
+
 
     public BookHotelPage Should_Select_First_Hotel(){
         selenium.click(detailsFirstButton);
@@ -123,17 +107,9 @@ public class BookHotelPage {
 
     //Detail Hotel functions ---------------------------------------------------------------------------------
 
-    public BookHotelPage Should_Press_Button_To_Modify_Original_Input(boolean push){
-        if(push){
-        selenium.click(modifyButton);
-        }
-        return this;
-    }
+    public BookHotelPage Should_Modify_Original_Search_Query(boolean modifySearch, String destination, int dateCheckIn, int dateCheckOut){
 
-    public BookHotelPage Should_Modify_Original_Search_Query(String destination, int dateCheckIn, int dateCheckOut){
-
-        boolean modifyPageVisible = selenium.isDisplayed(By.xpath("//label[text()='Destination']"));
-        if(modifyPageVisible) {
+        if(modifySearch) {
             selenium.dropdown(textfieldNewDestination, textfieldNewDestination, destination);
         }
 
@@ -146,6 +122,12 @@ public class BookHotelPage {
         selenium.click(modifySearchButton);
         return this;
     }
+
+    /************************************************
+     * DE CODE HIERONDER IS VERWIJDERD GEDURENDE HET
+     * LEESBAAR MAKEN VAN DE PAGE EN TEST OBJECTEN.
+     * ALS COMMENTAAR BEWAARD VOOR EVT. BEOORDELING
+     ************************************************/
 
     /*
         private By selectDataCheckin = By.xpath("//*[@id=\"datepickers-container\"]/div[1]/div/div/div/div[contains(text(),'20')]");

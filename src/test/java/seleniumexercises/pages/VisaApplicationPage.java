@@ -30,11 +30,11 @@ public class VisaApplicationPage {
     public VisaApplicationPage Should_Assert_That_Page_Is_Loaded(){
         Assert.assertEquals("Visa Booking", selenium.getElementText(displayBooking));
 
-        boolean searchSubmitted = selenium.isDisplayed(displayBooking);
-        if(searchSubmitted) {
-            System.out.println("The search has been submitted.");
-        } else {
-            System.out.println("The search was invalid. Please try again.");
+        boolean queryConfirmation = selenium.isDisplayed(displayBooking);
+        if(queryConfirmation){
+            System.out.println("Your search query has been submitted.");
+        } else{
+            System.out.println("Your query was insufficient.");
         }
         return this;
     }

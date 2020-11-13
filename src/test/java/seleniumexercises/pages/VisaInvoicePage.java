@@ -24,7 +24,7 @@ public class VisaInvoicePage {
         if (visaSubmitted) {
             System.out.println("Viewing your invoice");
         } else {
-            System.out.println("Cannot display your visa.");
+            System.out.println("Cannot display your invoice.");
         }
         return this;
     }

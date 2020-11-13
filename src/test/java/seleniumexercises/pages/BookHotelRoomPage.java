@@ -10,7 +10,6 @@ public class BookHotelRoomPage {
     private WebDriver driver;
     private SeleniumHelpers selenium;
 
-    private By displayHotelBooked = By.xpath("//h2[@id='detail-content-sticky-nav-00']");
     private By textfieldToAssert = By.xpath("//span[text()='Overview']");
 
     public BookHotelRoomPage(WebDriver driver) {
@@ -21,7 +20,7 @@ public class BookHotelRoomPage {
     public BookHotelRoomPage Should_Assert_That_Page_Is_Loaded(){
         Assert.assertEquals("Overview", selenium.getElementText(textfieldToAssert));
 
-        boolean hotelSelected = selenium.isDisplayed(displayHotelBooked);
+        boolean hotelSelected = selenium.isDisplayed(textfieldToAssert);
         if(hotelSelected){
             System.out.println("You've selected a hotel.");
         } else {
