@@ -29,9 +29,8 @@ public class SearchForVisaPage {
         selenium = new SeleniumHelpers(driver);
     }
 
-    public SearchForVisaPage Should_Assert_Page_Is_Loaded(){
+    public SearchForVisaPage shouldValidatePageLoaded(){
 
-        Assert.assertEquals("VISA", selenium.getElementText(textfieldToAssert));
         boolean searchQuery = selenium.isDisplayed(textfieldToAssert);
         if(searchQuery){
             System.out.println("Entering search query.");
@@ -41,7 +40,7 @@ public class SearchForVisaPage {
         return this;
     }
 
-    public SearchForVisaPage Should_Set_Origin_And_Destination(String countryOfOrigin, String countryToVisit){
+    public SearchForVisaPage shouldSetOriginAndDestination(String countryOfOrigin, String countryToVisit){
 
         selenium.dropdown(dropdownFromCountry, textfieldFromCountry, countryOfOrigin);
         selenium.click(By.xpath(String.format("//li/em[text()='%s']", countryOfOrigin)));
@@ -51,7 +50,7 @@ public class SearchForVisaPage {
         return this;
     }
 
-    public SearchForVisaPage Should_Set_Date(){
+    public SearchForVisaPage shouldSetDate(){
 
         GetDateClass date = new GetDateClass();
         String currentDate = date.getCurrentDate();
@@ -60,7 +59,7 @@ public class SearchForVisaPage {
         return this;
     }
 
-    public void Should_Submit_Query(){
+    public void shouldSubmitQuery(){
 
         selenium.click(buttonSubmit);
 

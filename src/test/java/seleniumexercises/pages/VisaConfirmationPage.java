@@ -21,8 +21,7 @@ public class VisaConfirmationPage {
         selenium = new SeleniumHelpers(driver);
     }
 
-    public VisaConfirmationPage Should_Assert_Page_Is_Loaded(){
-        Assert.assertEquals("Visa Submitted", selenium.getElementText(displayVisaSubmitted));
+    public VisaConfirmationPage shouldValidatePageLoaded(){
 
         boolean visaSubmitted = selenium.isDisplayed(displayVisaSubmitted);
         if (visaSubmitted){
@@ -34,13 +33,13 @@ public class VisaConfirmationPage {
         return this;
     }
 
-    public VisaConfirmationPage Should_Get_Reservation_Code(){
+    public VisaConfirmationPage shouldGetReservation_Code(){
         String reservationCode = selenium.getElementText(displayReservationCode);
         System.out.println("Your reservation code is: " + reservationCode);
         return this;
     }
 
-    public VisaConfirmationPage Should_Press_Button_To_View_Invoice(boolean view){
+    public VisaConfirmationPage shouldPressViewInvoiceButton(boolean view){
 
         if(view){
             selenium.click(buttonViewInvoice);

@@ -19,7 +19,7 @@ public class BookFlightTest {
 
 
     @Test
-    public void flightSearch() {
+    public void should_BookAFlight_When_HappyFlow() {
 
         new HomePage(driver)
                 .load()

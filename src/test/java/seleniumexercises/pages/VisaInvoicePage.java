@@ -17,8 +17,7 @@ public class VisaInvoicePage {
         selenium = new SeleniumHelpers(driver);
     }
 
-    public VisaInvoicePage Should_Assert_Page_Is_Loaded() {
-        Assert.assertEquals("Your booking status is waiting", selenium.getElementText(displayStatus));
+    public VisaInvoicePage shouldValidatePageLoaded() {
 
         boolean visaSubmitted = selenium.isDisplayed(displayStatus);
         if (visaSubmitted) {

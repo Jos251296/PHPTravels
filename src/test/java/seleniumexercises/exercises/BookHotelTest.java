@@ -19,7 +19,7 @@ public class BookHotelTest {
     }
 
     @Test
-    public void bookHotel(){
+    public void should_BookAHotel_When_HappyFlow(){
 
         new HomePage(driver)
                 .load();

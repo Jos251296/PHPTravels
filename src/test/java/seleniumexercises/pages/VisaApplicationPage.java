@@ -27,8 +27,7 @@ public class VisaApplicationPage {
         selenium = new SeleniumHelpers(driver);
     }
 
-    public VisaApplicationPage Should_Assert_That_Page_Is_Loaded(){
-        Assert.assertEquals("Visa Booking", selenium.getElementText(displayBooking));
+    public VisaApplicationPage shouldValidatePageLoaded(){
 
         boolean queryConfirmation = selenium.isDisplayed(displayBooking);
         if(queryConfirmation){
@@ -39,7 +38,8 @@ public class VisaApplicationPage {
         return this;
     }
 
-    public VisaApplicationPage Shoudld_Set_Personalia(String firstName, String lastName, String email, String contactNumber, String additionalRequests){
+    public VisaApplicationPage shouldSetPersonalia(
+            String firstName, String lastName, String email, String contactNumber, String additionalRequests){
 
         selenium.sendKeys(textfieldFirstName, firstName);
         selenium.sendKeys(textfieldLastName, lastName);
@@ -51,7 +51,7 @@ public class VisaApplicationPage {
         return this;
     }
 
-    public void Should_Press_Booking_Button() {
+    public void shouldPressBookingButton() {
 
         selenium.click(buttonBooking);
     }

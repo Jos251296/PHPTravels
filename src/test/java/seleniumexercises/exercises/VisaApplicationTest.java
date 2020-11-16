@@ -1,4 +1,6 @@
 package seleniumexercises.exercises;
+import org.openqa.selenium.By;
+import seleniumexercises.helpers.SeleniumHelpers;
 import seleniumexercises.pages.*;
 import org.junit.*;
 import org.openqa.selenium.WebDriver;
@@ -7,6 +9,7 @@ import org.openqa.selenium.chrome.ChromeDriver;
 public class VisaApplicationTest {
 
     private WebDriver driver;
+    private SeleniumHelpers selenium;
 
     @Before
     public void startBrowser() {
@@ -18,40 +21,49 @@ public class VisaApplicationTest {
     }
 
     @Test
-    public void applyForVisa() {
+    public void should_ApplyForVisa_When_HappyFlow() {
 
         new HomePage(driver)
                 .load()
                 .selectMenuItem("Visa");
 
+        Assert.assertEquals("VISA",
+                driver.findElement(By.xpath("//a[@data-name='visa']")).getText());
+
         new SearchForVisaPage(driver)
-                .Should_Assert_Page_Is_Loaded()
-                .Should_Set_Origin_And_Destination(
+                .shouldValidatePageLoaded()
+                .shouldSetOriginAndDestination(
                         "American Samoa",
                         "Saudi Arabia")
-                .Should_Set_Date()
-                .Should_Submit_Query();
+                .shouldSetDate()
+                .shouldSubmitQuery();
+
+        Assert.assertEquals("American Samoa",
+                driver.findElement(By.xpath("//h3/strong")).getText());
 
         new VisaApplicationPage(driver)
-                .Should_Assert_That_Page_Is_Loaded()
-                .Shoudld_Set_Personalia(
+                .shouldValidatePageLoaded()
+                .shouldSetPersonalia(
                         "Holly",
                         "Day",
                         "holly_day@badpuns.com",
                         "420-555-6969",
                         "A curious sperm whale and an exasperated bowl of petunias")
-                .Should_Press_Booking_Button();
+                .shouldPressBookingButton();
 
-        /**
-         * setViewInvoice requires a "Yes" or "yes" statement to continue to the invoice
-         */
+        Assert.assertEquals("Visa Submitted",
+                driver.findElement(By.xpath("//h4[@class='wow fadeIn']//strong")).getText());
+
         new VisaConfirmationPage(driver)
-                .Should_Assert_Page_Is_Loaded()
-                .Should_Get_Reservation_Code()
-                .Should_Press_Button_To_View_Invoice(true);
+                .shouldValidatePageLoaded()
+                .shouldGetReservation_Code()
+                .shouldPressViewInvoiceButton(true);
+
+        Assert.assertEquals("Your booking status is waiting",
+                driver.findElement(By.xpath("//h4")).getText());
 
         new VisaInvoicePage(driver)
-                .Should_Assert_Page_Is_Loaded();
+                .shouldValidatePageLoaded();
     }
 
     @After
